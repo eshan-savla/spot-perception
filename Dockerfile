@@ -88,6 +88,8 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive && \
 
 RUN apt-get install -y git
 
+USER $USER
+
 RUN mkdir -p /home/$USER/spot_ros2_ws/src
 	
 WORKDIR /home/$USER/spot_ros2_ws/src
@@ -98,11 +100,13 @@ WORKDIR /home/$USER/spot_ros2_ws/src/spot_ros2
 
 RUN git submodule init && git submodule update
 
-RUN ./install_spot_ros2.sh --arm64
+USER root
 
-#RUN . /opt/ros/$ROS_DISTRO/setup.sh && colcon build --symlink-install # --packages-ignore proto2ros_tests
+RUN yes|./install_spot_ros2.sh --arm64
 
 USER $USER
+
+# RUN . /opt/ros/$ROS_DISTRO/setup.sh && colcon build --symlink-install --packages-ignore proto2ros_tests
 
 ##############################################################################
 ##                                 Build ROS and run                        ##
