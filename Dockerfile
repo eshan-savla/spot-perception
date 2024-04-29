@@ -94,24 +94,26 @@ RUN mkdir -p /home/$USER/spot_ros2_ws/src
 	
 WORKDIR /home/$USER/spot_ros2_ws/src
 
-RUN git clone https://github.com/bdaiinstitute/spot_ros2.git
+RUN git clone https://github.com/bdaiinstitute/spot_ros2.git 
+
+# && git clone https://github.com/ros-tooling/cross_compile.git -b 0.10.0
+
+#RUN mkdir qemu-user-static && cp /usr/bin/qemu-*-static qemu-user-static
 
 WORKDIR /home/$USER/spot_ros2_ws/src/spot_ros2
 
 RUN git submodule init && git submodule update
 
-USER root
-
 RUN yes|./install_spot_ros2.sh --arm64
-
-USER $USER
 
 # RUN . /opt/ros/$ROS_DISTRO/setup.sh && colcon build --symlink-install --packages-ignore proto2ros_tests
 
 ##############################################################################
 ##                                 Build ROS and run                        ##
 ##############################################################################
-WORKDIR /home/$USER/
+WORKDIR /home/$USER/spot_ros2_ws
+
+ENTRYPOINT . /opt/ros/$ROS_DISTRO/setup.sh && colcon build --symlink-install --packages-ignore proto2ros_tests
  
 CMD /bin/bash
 
