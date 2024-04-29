@@ -59,9 +59,6 @@ RUN groupadd -g "$GID" "$USER"  && \
 RUN echo "source /opt/ros/$ROS_DISTRO/setup.bash" >> /etc/bash.bashrc
 RUN echo "export ROS_DOMAIN_ID=${DOMAIN_ID}" >> /etc/bash.bashrc
 
-USER $USER 
-# RUN mkdir -p /home/$USER/ros2_ws/src
-
 ##############################################################################
 ##                                 Nav2 Dependecies                         ##
 ##############################################################################
@@ -96,24 +93,20 @@ WORKDIR /home/$USER/spot_ros2_ws/src
 
 RUN git clone https://github.com/bdaiinstitute/spot_ros2.git 
 
-# && git clone https://github.com/ros-tooling/cross_compile.git -b 0.10.0
-
-#RUN mkdir qemu-user-static && cp /usr/bin/qemu-*-static qemu-user-static
-
 WORKDIR /home/$USER/spot_ros2_ws/src/spot_ros2
 
 RUN git submodule init && git submodule update
 
 RUN yes|./install_spot_ros2.sh --arm64
 
-# RUN . /opt/ros/$ROS_DISTRO/setup.sh && colcon build --symlink-install --packages-ignore proto2ros_tests
+WORKDIR /home/$USER/spot_ros2_ws
+
+RUN . /opt/ros/$ROS_DISTRO/setup.sh && colcon build --symlink-install --packages-ignore proto2ros_tests
 
 ##############################################################################
 ##                                 Build ROS and run                        ##
 ##############################################################################
 WORKDIR /home/$USER/spot_ros2_ws
-
-ENTRYPOINT . /opt/ros/$ROS_DISTRO/setup.sh && colcon build --symlink-install --packages-ignore proto2ros_tests
  
 CMD /bin/bash
 
