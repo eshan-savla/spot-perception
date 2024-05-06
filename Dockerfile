@@ -70,8 +70,6 @@ RUN apt-get update && apt-get install -y ros-$ROS_DISTRO-navigation2 \
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive && \
     apt-get install -y ros-$ROS_DISTRO-joint-state-publisher-gui \
                        ros-$ROS_DISTRO-ros-ign \
-                    #    ros-$ROS_DISTRO-navigation2 \
-                    #    ros-$ROS_DISTRO-nav2-bringup \
                     #   ros-$ROS_DISTRO-gazebo-ros-pkgs \
                     #    ros-$ROS_DISTRO-robot-localization \
                     #   ros-$ROS_DISTRO-gazebo-ros2-control \
@@ -99,6 +97,10 @@ RUN git submodule init && git submodule update
 
 RUN yes|./install_spot_ros2.sh --arm64
 
+RUN mkdir -p /home/$USER/spot_ros2_ws/src/spot_ros2/configs
+
+COPY --chown=$USER ./configs/spot_ros_config.yaml /home/$USER/spot_ros2_ws/src/spot_ros2/configs/spot_ros_config.yaml
+
 WORKDIR /home/$USER/spot_ros2_ws
 
 RUN . /opt/ros/$ROS_DISTRO/setup.sh && colcon build --symlink-install --packages-ignore proto2ros_tests
@@ -107,6 +109,9 @@ RUN . /opt/ros/$ROS_DISTRO/setup.sh && colcon build --symlink-install --packages
 ##                                 Build ROS and run                        ##
 ##############################################################################
 WORKDIR /home/$USER/spot_ros2_ws
- 
-CMD /bin/bash
+
+COPY --chown=$USER:$USER --chmod=0755 ./entrypoint.sh /home/$USER/spot_ros2_ws/entrypoint.sh
+
+CMD [ "/bin/bash" ]
+ENTRYPOINT ["./entrypoint.sh"]
 
