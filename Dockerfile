@@ -99,11 +99,11 @@ RUN yes|./install_spot_ros2.sh --arm64
 
 RUN mkdir -p /home/$USER/spot_ros2_ws/src/spot_ros2/configs
 
-COPY --chown=$USER ./configs/spot_ros_config.yaml /home/$USER/spot_ros2_ws/src/spot_ros2/configs/spot_ros_config.yaml
-
 WORKDIR /home/$USER/spot_ros2_ws
 
 RUN . /opt/ros/$ROS_DISTRO/setup.sh && colcon build --symlink-install --packages-ignore proto2ros_tests
+
+COPY --chown=$USER ./configs/spot_ros_config.yaml /home/$USER/spot_ros2_ws/src/spot_ros2/configs/spot_ros_config.yaml
 
 ##############################################################################
 ##                                 Build ROS and run                        ##
@@ -113,5 +113,6 @@ WORKDIR /home/$USER/spot_ros2_ws
 COPY --chown=$USER:$USER --chmod=0755 ./entrypoint.sh /home/$USER/spot_ros2_ws/entrypoint.sh
 
 CMD [ "/bin/bash" ]
+
 ENTRYPOINT ["./entrypoint.sh"]
 
