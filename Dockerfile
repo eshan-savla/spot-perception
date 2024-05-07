@@ -110,7 +110,7 @@ COPY --chown=$USER ./configs/spot_ros_config.yaml /home/$USER/spot_ros2_ws/src/s
 ##############################################################################
 WORKDIR /home/$USER/spot_ros2_ws
 
-COPY --chown=$USER:$USER --chmod=0755 ./entrypoint.sh /home/$USER/spot_ros2_ws/entrypoint.sh
+COPY --chown=$USER --chmod=0755 ./entrypoint.sh /home/$USER/spot_ros2_ws/entrypoint.sh
 
 CMD [ "/bin/bash" ]
 
