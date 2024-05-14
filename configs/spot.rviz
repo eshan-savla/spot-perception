@@ -1,6 +1,6 @@
 Panels:
   - Class: rviz_common/Displays
-    Help Height: 123
+    Help Height: 138
     Name: Displays
     Property Tree Widget:
       Expanded:
@@ -13,7 +13,7 @@ Panels:
         - /DepthCloud4/Auto Size1
         - /DepthCloud5/Auto Size1
       Splitter Ratio: 0.5
-    Tree Height: 377
+    Tree Height: 649
   - Class: rviz_common/Selection
     Name: Selection
   - Class: rviz_common/Tool Properties
@@ -55,77 +55,69 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: true
-        back:
+        hkaspot/back:
           Value: true
-        back_fisheye:
+        hkaspot/back_fisheye:
           Value: true
-        base_link:
+        hkaspot/base_link:
           Value: true
-        body:
+        hkaspot/body:
           Value: true
-        dock_549:
+        hkaspot/dock_549:
           Value: true
-        fiducial_549:
+        hkaspot/flat_body:
           Value: true
-        fiducial_57:
+        hkaspot/front_left_hip:
           Value: true
-        filtered_fiducial_549:
+        hkaspot/front_left_lower_leg:
           Value: true
-        filtered_fiducial_57:
+        hkaspot/front_left_upper_leg:
           Value: true
-        flat_body:
+        hkaspot/front_rail:
           Value: true
-        front_left_hip:
+        hkaspot/front_right_hip:
           Value: true
-        front_left_lower_leg:
+        hkaspot/front_right_lower_leg:
           Value: true
-        front_left_upper_leg:
+        hkaspot/front_right_upper_leg:
           Value: true
-        front_rail:
+        hkaspot/frontleft:
           Value: true
-        front_right_hip:
+        hkaspot/frontleft_fisheye:
           Value: true
-        front_right_lower_leg:
+        hkaspot/frontright:
           Value: true
-        front_right_upper_leg:
+        hkaspot/frontright_fisheye:
           Value: true
-        frontleft:
+        hkaspot/gpe:
           Value: true
-        frontleft_fisheye:
+        hkaspot/head:
           Value: true
-        frontright:
+        hkaspot/left:
           Value: true
-        frontright_fisheye:
+        hkaspot/left_fisheye:
           Value: true
-        gpe:
+        hkaspot/odom:
           Value: true
-        head:
+        hkaspot/rear_left_hip:
           Value: true
-        left:
+        hkaspot/rear_left_lower_leg:
           Value: true
-        left_fisheye:
+        hkaspot/rear_left_upper_leg:
           Value: true
-        odom:
+        hkaspot/rear_rail:
           Value: true
-        rear_left_hip:
+        hkaspot/rear_right_hip:
           Value: true
-        rear_left_lower_leg:
+        hkaspot/rear_right_lower_leg:
           Value: true
-        rear_left_upper_leg:
+        hkaspot/rear_right_upper_leg:
           Value: true
-        rear_rail:
+        hkaspot/right:
           Value: true
-        rear_right_hip:
+        hkaspot/right_fisheye:
           Value: true
-        rear_right_lower_leg:
-          Value: true
-        rear_right_upper_leg:
-          Value: true
-        right:
-          Value: true
-        right_fisheye:
-          Value: true
-        vision:
+        hkaspot/vision:
           Value: true
       Marker Scale: 1
       Name: TF
@@ -133,59 +125,52 @@ Visualization Manager:
       Show Axes: true
       Show Names: false
       Tree:
-        odom:
-          body:
-            base_link:
+        hkaspot/odom:
+          hkaspot/body:
+            hkaspot/base_link:
               {}
-            flat_body:
+            hkaspot/flat_body:
               {}
-            front_left_hip:
-              front_left_upper_leg:
-                front_left_lower_leg:
+            hkaspot/front_left_hip:
+              hkaspot/front_left_upper_leg:
+                hkaspot/front_left_lower_leg:
                   {}
-            front_rail:
+            hkaspot/front_rail:
               {}
-            front_right_hip:
-              front_right_upper_leg:
-                front_right_lower_leg:
+            hkaspot/front_right_hip:
+              hkaspot/front_right_upper_leg:
+                hkaspot/front_right_lower_leg:
                   {}
-            head:
-              back:
-                back_fisheye:
-                  fiducial_549:
-                    {}
-              frontleft:
-                fiducial_57:
+            hkaspot/head:
+              hkaspot/back:
+                hkaspot/back_fisheye:
                   {}
-                frontleft_fisheye:
+              hkaspot/frontleft:
+                hkaspot/frontleft_fisheye:
                   {}
-              frontright:
-                frontright_fisheye:
+              hkaspot/frontright:
+                hkaspot/frontright_fisheye:
                   {}
-              left:
-                left_fisheye:
+              hkaspot/left:
+                hkaspot/left_fisheye:
                   {}
-              right:
-                right_fisheye:
+              hkaspot/right:
+                hkaspot/right_fisheye:
                   {}
-            rear_left_hip:
-              rear_left_upper_leg:
-                rear_left_lower_leg:
+            hkaspot/rear_left_hip:
+              hkaspot/rear_left_upper_leg:
+                hkaspot/rear_left_lower_leg:
                   {}
-            rear_rail:
+            hkaspot/rear_rail:
               {}
-            rear_right_hip:
-              rear_right_upper_leg:
-                rear_right_lower_leg:
+            hkaspot/rear_right_hip:
+              hkaspot/rear_right_upper_leg:
+                hkaspot/rear_right_lower_leg:
                   {}
-            vision:
-              dock_549:
+            hkaspot/vision:
+              hkaspot/dock_549:
                 {}
-              filtered_fiducial_549:
-                {}
-              filtered_fiducial_57:
-                {}
-          gpe:
+          hkaspot/gpe:
             {}
       Update Interval: 0
       Value: true
@@ -193,7 +178,7 @@ Visualization Manager:
       Class: rviz_default_plugins/RobotModel
       Collision Enabled: false
       Description File: ""
-      Description Source: Topic
+      Description Source: File
       Description Topic:
         Depth: 5
         Durability Policy: Volatile
@@ -207,83 +192,6 @@ Visualization Manager:
         Expand Link Details: false
         Expand Tree: false
         Link Tree Style: Links in Alphabetic Order
-        base_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        body:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        front_left_hip:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        front_left_lower_leg:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        front_left_upper_leg:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        front_rail:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        front_right_hip:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        front_right_lower_leg:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        front_right_upper_leg:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        rear_left_hip:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        rear_left_lower_leg:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        rear_left_upper_leg:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        rear_rail:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        rear_right_hip:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        rear_right_lower_leg:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        rear_right_upper_leg:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
       Mass Properties:
         Inertia: false
         Mass: false
@@ -298,8 +206,8 @@ Visualization Manager:
         Value: true
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
-        Max Value: 0.4103267192840576
-        Min Value: -0.45322567224502563
+        Max Value: 0.3337972164154053
+        Min Value: -0.26738178730010986
         Value: true
       Axis: Z
       Channel Name: intensity
@@ -309,7 +217,7 @@ Visualization Manager:
       Color Transformer: AxisColor
       Color Transport Hint: raw
       Decay Time: 0
-      Depth Map Topic: /depth/back/image
+      Depth Map Topic: /hkaspot/depth/back/image
       Depth Map Transport Hint: raw
       Enabled: true
       Invert Rainbow: false
@@ -337,8 +245,8 @@ Visualization Manager:
         Value: true
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
-        Max Value: 3.711625576019287
-        Min Value: -0.2989664673805237
+        Max Value: 3.8312618732452393
+        Min Value: -0.5042775273323059
         Value: true
       Axis: Z
       Channel Name: intensity
@@ -348,7 +256,7 @@ Visualization Manager:
       Color Transformer: AxisColor
       Color Transport Hint: raw
       Decay Time: 0
-      Depth Map Topic: /depth/frontleft/image
+      Depth Map Topic: /hkaspot/depth/frontleft/image
       Depth Map Transport Hint: raw
       Enabled: true
       Invert Rainbow: false
@@ -376,8 +284,8 @@ Visualization Manager:
         Value: true
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
-        Max Value: 3.314344644546509
-        Min Value: -0.3280157446861267
+        Max Value: 3.0767054557800293
+        Min Value: -0.3739863634109497
         Value: true
       Axis: Z
       Channel Name: intensity
@@ -387,7 +295,7 @@ Visualization Manager:
       Color Transformer: AxisColor
       Color Transport Hint: raw
       Decay Time: 0
-      Depth Map Topic: /depth/frontright/image
+      Depth Map Topic: /hkaspot/depth/frontright/image
       Depth Map Transport Hint: raw
       Enabled: true
       Invert Rainbow: false
@@ -415,8 +323,8 @@ Visualization Manager:
         Value: true
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
-        Max Value: 3.212958335876465
-        Min Value: -0.43990474939346313
+        Max Value: 2.3623597621917725
+        Min Value: -1.7800644636154175
         Value: true
       Axis: Z
       Channel Name: intensity
@@ -426,7 +334,7 @@ Visualization Manager:
       Color Transformer: AxisColor
       Color Transport Hint: raw
       Decay Time: 0
-      Depth Map Topic: /depth/right/image
+      Depth Map Topic: /hkaspot/depth/right/image
       Depth Map Transport Hint: raw
       Enabled: true
       Invert Rainbow: false
@@ -454,8 +362,8 @@ Visualization Manager:
         Value: true
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
-        Max Value: 0.1533040553331375
-        Min Value: -0.2944871783256531
+        Max Value: 0.14869287610054016
+        Min Value: -0.25947579741477966
         Value: true
       Axis: Z
       Channel Name: intensity
@@ -465,7 +373,7 @@ Visualization Manager:
       Color Transformer: AxisColor
       Color Transport Hint: raw
       Decay Time: 0
-      Depth Map Topic: /depth/left/image
+      Depth Map Topic: /hkaspot/depth/left/image
       Depth Map Transport Hint: raw
       Enabled: true
       Invert Rainbow: false
@@ -490,7 +398,7 @@ Visualization Manager:
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
-    Fixed Frame: vision
+    Fixed Frame: hkaspot/vision
     Frame Rate: 30
   Name: root
   Tools:
@@ -556,10 +464,10 @@ Visualization Manager:
 Window Geometry:
   Displays:
     collapsed: false
-  Height: 1016
+  Height: 1654
   Hide Left Dock: false
   Hide Right Dock: false
-  QMainWindow State: 000000ff00000000fd000000040000000000000262000003a2fc0200000018fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000005c00fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c006100790073010000003b0000022f000000c700fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261fb0000000a0049006d006100670065000000003d000003820000000000000000fb0000000a0049006d00610067006500000003c5000000160000000000000000fb0000000a0049006d006100670065000000022f000000810000000000000000fb0000000a0049006d00610067006501000004410000011d0000000000000000fb0000000a0049006d006100670065000000032a000000cc0000000000000000fb0000000a0049006d0061006700650000000000ffffffff0000000000000000fb0000000a0049006d00610067006500000001c3000000ae0000000000000000fb0000000a0049006d0061006700650000000221000000da0000000000000000fb0000000a0049006d00610067006500000002bb000001200000000000000000fb0000000a0049006d00610067006501000001ef000000ec0000000000000000fb0000000a0049006d00610067006501000002e1000000fa0000000000000000fb0000000c00430061006d0065007200610000000311000000ca0000000000000000fb0000000a0049006d00610067006500000002f0000000eb0000000000000000fb0000000a0049006d0061006700650000000317000000c40000000000000000fb0000000a0049006d006100670065000000033f0000009c0000000000000000fb000000220053006c0061006d0054006f006f006c0062006f00780050006c007500670069006e01000002700000016d0000016d00ffffff000000010000010f0000039efc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a00560069006500770073000000003d0000039e000000a000fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000004420000003efc0100000002fb0000000800540069006d00650100000000000004420000000000000000fb0000000800540069006d00650100000000000004500000000000000000000004d2000003a200000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd00000004000000000000038a000005dafc0200000018fb0000001200530065006c0065006300740069006f006e00000001e10000009b000000b000fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c006100790073010000006e000003810000018200fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261fb0000000a0049006d006100670065000000003d000003820000000000000000fb0000000a0049006d00610067006500000003c5000000160000000000000000fb0000000a0049006d006100670065000000022f000000810000000000000000fb0000000a0049006d00610067006501000004410000011d0000000000000000fb0000000a0049006d006100670065000000032a000000cc0000000000000000fb0000000a0049006d0061006700650000000000ffffffff0000000000000000fb0000000a0049006d00610067006500000001c3000000ae0000000000000000fb0000000a0049006d0061006700650000000221000000da0000000000000000fb0000000a0049006d00610067006500000002bb000001200000000000000000fb0000000a0049006d00610067006501000001ef000000ec0000000000000000fb0000000a0049006d00610067006501000002e1000000fa0000000000000000fb0000000c00430061006d0065007200610000000311000000ca0000000000000000fb0000000a0049006d00610067006500000002f0000000eb0000000000000000fb0000000a0049006d0061006700650000000317000000c40000000000000000fb0000000a0049006d006100670065000000033f0000009c0000000000000000fb000000220053006c0061006d0054006f006f006c0062006f00780050006c007500670069006e01000003fb0000024d000000d400ffffff000000010000010f0000039efc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a00560069006500770073000000003d0000039e0000013200fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000004420000003efc0100000002fb0000000800540069006d00650100000000000004420000000000000000fb0000000800540069006d00650100000000000004500000000000000000000006d1000005da00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Selection:
     collapsed: false
   SlamToolboxPlugin:
@@ -568,6 +476,6 @@ Window Geometry:
     collapsed: false
   Views:
     collapsed: false
-  Width: 1850
-  X: 70
-  Y: 27
+  Width: 2663
+  X: 140
+  Y: 54
