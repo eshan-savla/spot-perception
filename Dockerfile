@@ -103,7 +103,8 @@ WORKDIR /home/$USER/spot_ros2_ws
 
 RUN . /opt/ros/$ROS_DISTRO/setup.sh && colcon build --symlink-install --packages-ignore proto2ros_tests
 
-COPY --chown=$USER ./configs/spot_ros_config.yaml /home/$USER/spot_ros2_ws/src/spot_ros2/configs/spot_ros_config.yaml
+COPY --chown=$USER --chmod=0444 ./configs/spot_ros_config.yaml /home/$USER/spot_ros2_ws/src/spot_ros2/configs/spot_ros_config.yaml
+
 
 ##############################################################################
 ##                                 Build ROS and run                        ##
