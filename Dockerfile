@@ -64,7 +64,7 @@ RUN echo "export ROS_DOMAIN_ID=${DOMAIN_ID}" >> /etc/bash.bashrc
 ##############################################################################
 USER root
 RUN apt-get update && apt-get install -y ros-$ROS_DISTRO-navigation2 \
-                                         ros-$ROS_DISTRO-nav2-bringup && \
+                                         ros-$ROS_DISTRO-nav2-bringup ros-$ROS_DISTRO-slam-toolbox && \
                                         rm -rf /var/lib/apt/lists/*
 
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive && \
