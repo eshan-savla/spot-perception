@@ -1,0 +1,33 @@
+version: '2'
+
+services:
+  spot_ros2_container:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: bash ./entrypoint.sh
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - /home/spot/spot-perception:/home/robot/spot-perception:rw
+    privileged: true
+    stdin_open: true
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+    network_mode: host
+    ipc: host
+  
+  rtabmap_ros2_container:
+    build:
+      context: ./docker/rtab-map
+      dockerfile: Dockerfile
+    command: bash ./entrypoint.sh
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - /home/spot/spot-perception:/home/robot/spot-perception:rw
+    privileged: true
+    stdin_open: true
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+    
