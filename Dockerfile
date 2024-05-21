@@ -64,12 +64,15 @@ RUN echo "export ROS_DOMAIN_ID=${DOMAIN_ID}" >> /etc/bash.bashrc
 ##############################################################################
 USER root
 RUN apt-get update && apt-get install -y ros-$ROS_DISTRO-navigation2 \
-                                         ros-$ROS_DISTRO-nav2-bringup ros-$ROS_DISTRO-slam-toolbox && \
-                                        rm -rf /var/lib/apt/lists/*
+                                         ros-$ROS_DISTRO-nav2-bringup \
+                                         ros-$ROS_DISTRO-slam-toolbox \
+                                         && rm -rf /var/lib/apt/lists/*
 
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive && \
     apt-get install -y ros-$ROS_DISTRO-joint-state-publisher-gui \
                        ros-$ROS_DISTRO-ros-ign \
+                       ros-$ROS_DISTRO-rtabmap \
+                       ros-$ROS_DISTRO-rtabmap-ros \
                     #   ros-$ROS_DISTRO-gazebo-ros-pkgs \
                     #    ros-$ROS_DISTRO-robot-localization \
                     #   ros-$ROS_DISTRO-gazebo-ros2-control \
@@ -80,7 +83,6 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive && \
 ##############################################################################
 ##                               Spot-ROS2 Drivers                          ##
 ##############################################################################
-
 RUN apt-get install -y git
 
 USER $USER
@@ -89,7 +91,11 @@ RUN mkdir -p /home/$USER/spot_ros2_ws/src
 	
 WORKDIR /home/$USER/spot_ros2_ws/src
 
-RUN git clone https://github.com/bdaiinstitute/spot_ros2.git 
+#RUN git clone https://github.com/introlab/rtabmap.git && git clone --branch ros2 https://github.com/introlab/rtabmap_ros.git
+
+#RUN rosdep update && rosdep install --from-paths . --ignore-src -r -y
+
+RUN git clone https://github.com/bdaiinstitute/spot_ros2.git
 
 WORKDIR /home/$USER/spot_ros2_ws/src/spot_ros2
 
@@ -101,7 +107,7 @@ RUN mkdir -p /home/$USER/spot_ros2_ws/src/spot_ros2/configs
 
 WORKDIR /home/$USER/spot_ros2_ws
 
-RUN . /opt/ros/$ROS_DISTRO/setup.sh && colcon build --symlink-install --packages-ignore proto2ros_tests
+RUN . /opt/ros/$ROS_DISTRO/setup.sh && colcon build --symlink-install --packages-ignore proto2ros_tests --cmake-args -DCMAKE_BUILD_TYPE=Release
 
 COPY --chown=$USER --chmod=0444 ./configs/spot_ros_config.yaml /home/$USER/spot_ros2_ws/src/spot_ros2/configs/spot_ros_config.yaml
 

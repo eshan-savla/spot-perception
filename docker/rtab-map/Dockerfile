@@ -70,6 +70,7 @@ RUN apt-get update && apt-get install -y ros-$ROS_DISTRO-navigation2 \
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive && \
     apt-get install -y ros-$ROS_DISTRO-joint-state-publisher-gui \
                        ros-$ROS_DISTRO-ros-ign \
+                       ros-$ROS_DISTRO-rtabmap \
                        ros-$ROS_DISTRO-rtabmap-ros \
                     #   ros-$ROS_DISTRO-gazebo-ros-pkgs \
                     #    ros-$ROS_DISTRO-robot-localization \
@@ -79,7 +80,6 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive && \
     && rm -rf /var/lib/apt/lists/*
 USER ${USER}
 WORKDIR /home/${USER}
-
-COPY --chown=${USER}:${USER} ./entrypoint.sh /home/${USER}/
+COPY --chown=$USER:$USER --chmod=0755 ./entrypoint.sh /home/$USER/entrypoint.sh
 CMD [ "/bin/bash" ]
 ENTRYPOINT [ "/home/robot/entrypoint.sh" ]
