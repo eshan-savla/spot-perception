@@ -9,6 +9,7 @@ ros2 launch rtabmap_launch rtabmap.launch.py \
     depth_topic:=/hkaspot/depth_registered/back/image \
     camera_info_topic:=/hkaspot/camera/back/camera_info \
     odom_frame_id:=hkaspot/odom \
+    odom_topic:=/hkaspot/odometry \
     visual_odometry:=false \
     frame_id:=hkaspot/body \
     subscribe_depth:=false \
