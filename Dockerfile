@@ -41,7 +41,7 @@ ARG USER=robot
 ARG PASSWORD=robot
 ARG UID=1000
 ARG GID=1000
-ARG DOMAIN_ID=8
+ARG DOMAIN_ID=33
 ARG VIDEO_GID=44
 ENV ROS_DOMAIN_ID=${DOMAIN_ID}
 ENV UID=${UID}
@@ -58,7 +58,6 @@ RUN groupadd -g "$GID" "$USER"  && \
     echo "%sudo ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/sudogrp
 RUN echo "source /opt/ros/$ROS_DISTRO/setup.bash" >> /etc/bash.bashrc
 RUN echo "export ROS_DOMAIN_ID=${DOMAIN_ID}" >> /etc/bash.bashrc
-
 ##############################################################################
 ##                                 Nav2 Dependecies                         ##
 ##############################################################################
@@ -79,6 +78,8 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive && \
                        ros-$ROS_DISTRO-joint-state-broadcaster \
                     #    ros-$ROS_DISTRO-diff-drive-controller && \
     && rm -rf /var/lib/apt/lists/*
+
+
 
 ##############################################################################
 ##                               Spot-ROS2 Drivers                          ##
@@ -111,14 +112,17 @@ RUN . /opt/ros/$ROS_DISTRO/setup.sh && colcon build --symlink-install --packages
 
 COPY --chown=$USER --chmod=0444 ./configs/spot_ros_config.yaml /home/$USER/spot_ros2_ws/src/spot_ros2/configs/spot_ros_config.yaml
 
+USER root
 
+COPY --chown=$USER --chmod=0444 ./launch/rtabmap.launch.py /opt/ros/humble/share/rtabmap_launch/launch/rtabmap.launch.py
+COPY --chown=$USER ./configs/nav2_params.yaml /opt/ros/humble/share/nav2_bringup/params/nav2_params.yaml
+USER $USER
 ##############################################################################
 ##                                 Build ROS and run                        ##
 ##############################################################################
 WORKDIR /home/$USER/spot_ros2_ws
 
 COPY --chown=$USER --chmod=0755 ./entrypoint.sh /home/$USER/spot_ros2_ws/entrypoint.sh
-
 CMD [ "/bin/bash" ]
 
 ENTRYPOINT ["./entrypoint.sh"]
