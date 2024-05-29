@@ -45,7 +45,7 @@ RUN groupadd -g "$GID" "$USER"  && \
     usermod -aG realtime "$USER" && \
     echo "$USER:$PASSWORD" | chpasswd && \
     echo "%sudo ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/sudogrp
-RUN echo "export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp" >> /etc/bash.bashrc
+# RUN echo "export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp" >> /etc/bash.bashrc
 RUN echo "source /opt/ros/$ROS_DISTRO/setup.bash" >> /etc/bash.bashrc
 RUN echo "export ROS_DOMAIN_ID=${DOMAIN_ID}" >> /etc/bash.bashrc
 
@@ -58,10 +58,8 @@ ENV FASTRTPS_DEFAULT_PROFILES_FILE=/home/$USER/dds_profile.xml
 ##############################################################################
 USER root
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive && apt-get install -y --no-install-recommends \
-    git \
     ros-$ROS_DISTRO-desktop \
     ros-$ROS_DISTRO-desktop-full \
-    ros-$ROS_DISTRO-rmw-cyclonedds-cpp \
     ros-$ROS_DISTRO-joint-state-publisher-gui \
     ros-$ROS_DISTRO-joint-state-broadcaster \
     ros-$ROS_DISTRO-ros-ign \
@@ -73,6 +71,8 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive && apt-get install -y --no-
     && apt-get -y autoremove \
     && apt-get clean autoclean \
     && rm -fr /var/lib/apt/lists/*
+
+    # removed for now:     ros-$ROS_DISTRO-rmw-cyclonedds-cpp \
 ##############################################################################
 ##                               Spot-ROS2 Drivers                          ##
 ##############################################################################
