@@ -9,7 +9,7 @@ docker run -it --net=host \
     --volume="/home/spot/spot-perception:/home/robot/spot-perception:rw" \
     --volume="/home/spot/spot_map:/home/robot/spot_map:rw" \
     --name spot_ros2_container \
-    --privileged eshansavla0512/ros2-spot-arm64:latest
+    --privileged eshansavla0512/ros2-spot-arm64:rework
 
 #docker run -it --net=host \
 #    --rm \

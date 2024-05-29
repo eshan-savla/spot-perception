@@ -45,6 +45,7 @@ RUN groupadd -g "$GID" "$USER"  && \
     usermod -aG realtime "$USER" && \
     echo "$USER:$PASSWORD" | chpasswd && \
     echo "%sudo ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/sudogrp
+RUN echo "export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp" >> /etc/bash.bashrc
 RUN echo "source /opt/ros/$ROS_DISTRO/setup.bash" >> /etc/bash.bashrc
 RUN echo "export ROS_DOMAIN_ID=${DOMAIN_ID}" >> /etc/bash.bashrc
 
@@ -60,6 +61,7 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive && apt-get install -y --no-
     git \
     ros-$ROS_DISTRO-desktop \
     ros-$ROS_DISTRO-desktop-full \
+    ros-$ROS_DISTRO-rmw-cyclonedds-cpp \
     ros-$ROS_DISTRO-joint-state-publisher-gui \
     ros-$ROS_DISTRO-joint-state-broadcaster \
     ros-$ROS_DISTRO-ros-ign \
@@ -70,7 +72,7 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive && apt-get install -y --no-
     ros-$ROS_DISTRO-slam-toolbox \
     && apt-get -y autoremove \
     && apt-get clean autoclean \
-    && rm -fr /var/lib/apt/lists/{apt,dpkg,cache,log} /tmp/* /var/tmp/*
+    && rm -fr /var/lib/apt/lists/*
 ##############################################################################
 ##                               Spot-ROS2 Drivers                          ##
 ##############################################################################
@@ -93,7 +95,6 @@ RUN . /opt/ros/$ROS_DISTRO/setup.sh && colcon build --symlink-install --packages
 COPY --chown=$USER --chmod=0444 ./configs/spot_ros_config.yaml /home/$USER/spot_ros2_ws/src/spot_ros2/configs/spot_ros_config.yaml
 
 USER root
-
 COPY --chown=$USER --chmod=0444 ./launch/rtabmap.launch.py /opt/ros/humble/share/rtabmap_launch/launch/rtabmap.launch.py
 COPY --chown=$USER ./configs/nav2_params.yaml /opt/ros/humble/share/nav2_bringup/params/nav2_params.yaml
 USER $USER
