@@ -108,9 +108,14 @@ RUN mkdir -p /home/$USER/spot_ros2_ws/src/spot_ros2/configs
 
 WORKDIR /home/$USER/spot_ros2_ws
 
+COPY --chown=$USER ./configs/CMakeLists.txt /home/$USER/spot_ros2_ws/src/spot_ros2/spot_driver/CMakeLists.txt
+
+COPY --chown=$USER --chmod=0444 ./launch/translate_node.py /home/$USER/spot_ros2_ws/src/spot_ros2/spot_driver/spot_driver/translate_node.py
+
 RUN . /opt/ros/$ROS_DISTRO/setup.sh && colcon build --symlink-install --packages-ignore proto2ros_tests --cmake-args -DCMAKE_BUILD_TYPE=Release
 
 COPY --chown=$USER --chmod=0444 ./configs/spot_ros_config.yaml /home/$USER/spot_ros2_ws/src/spot_ros2/configs/spot_ros_config.yaml
+
 
 USER root
 

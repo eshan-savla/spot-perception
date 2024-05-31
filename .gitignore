@@ -1,6 +1,10 @@
 # Created by https://www.toptal.com/developers/gitignore/api/python,linux,c++,ros,ros2
 # Edit at https://www.toptal.com/developers/gitignore?templates=python,linux,c++,ros,ros2
 
+*.db
+*.ply
+map/poses.txt
+
 ### C++ ###
 # Prerequisites
 *.d
