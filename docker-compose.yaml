@@ -11,6 +11,7 @@ services:
       - /home/spot/spot-perception:/home/robot/spot-perception:rw
     privileged: true
     stdin_open: true
+    tty: true
     environment:
       - DISPLAY=${DISPLAY}
       - QT_X11_NO_MITSHM=1
@@ -27,6 +28,7 @@ services:
       - /home/spot/spot-perception:/home/robot/spot-perception:rw
     privileged: true
     stdin_open: true
+    tty: true
     environment:
       - DISPLAY=${DISPLAY}
       - QT_X11_NO_MITSHM=1
