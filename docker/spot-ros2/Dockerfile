@@ -45,11 +45,10 @@ RUN groupadd -g "$GID" "$USER"  && \
     usermod -aG realtime "$USER" && \
     echo "$USER:$PASSWORD" | chpasswd && \
     echo "%sudo ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/sudogrp
-# RUN echo "export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp" >> /etc/bash.bashrc
 RUN echo "source /opt/ros/$ROS_DISTRO/setup.bash" >> /etc/bash.bashrc
 RUN echo "export ROS_DOMAIN_ID=${DOMAIN_ID}" >> /etc/bash.bashrc
 
-COPY dds_profile.xml /home/$USER
+COPY docker/dds_profile.xml /home/$USER
 RUN chown $USER:$USER /home/$USER/dds_profile.xml
 ENV FASTRTPS_DEFAULT_PROFILES_FILE=/home/$USER/dds_profile.xml
 
@@ -57,17 +56,11 @@ ENV FASTRTPS_DEFAULT_PROFILES_FILE=/home/$USER/dds_profile.xml
 ##                               install dependencies and ROS2 and Nav2     ##
 ##############################################################################
 USER root
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive && apt-get install -y --no-install-recommends \
-    ros-$ROS_DISTRO-desktop \
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive && apt-get install -y --no-install-recommends ros-$ROS_DISTRO-desktop \
     ros-$ROS_DISTRO-desktop-full \
     ros-$ROS_DISTRO-joint-state-publisher-gui \
     ros-$ROS_DISTRO-joint-state-broadcaster \
     ros-$ROS_DISTRO-ros-ign \
-    ros-$ROS_DISTRO-rtabmap \
-    ros-$ROS_DISTRO-rtabmap-ros \
-    ros-$ROS_DISTRO-navigation2 \
-    ros-$ROS_DISTRO-nav2-bringup \
-    ros-$ROS_DISTRO-slam-toolbox \
     && apt-get -y autoremove \
     && apt-get clean autoclean \
     && rm -fr /var/lib/apt/lists/*
@@ -92,18 +85,14 @@ WORKDIR /home/$USER/spot_ros2_ws
 
 RUN . /opt/ros/$ROS_DISTRO/setup.sh && colcon build --symlink-install --packages-ignore proto2ros_tests --cmake-args -DCMAKE_BUILD_TYPE=Release
 
-COPY --chown=$USER --chmod=0444 ./configs/spot_ros_config.yaml /home/$USER/spot_ros2_ws/src/spot_ros2/configs/spot_ros_config.yaml
+COPY --chown=$USER --chmod=0755 configs/spot_ros_config.yaml /home/$USER/spot_ros2_ws/src/spot_ros2/configs/spot_ros_config.yaml
 
-USER root
-COPY --chown=$USER --chmod=0444 ./launch/rtabmap.launch.py /opt/ros/humble/share/rtabmap_launch/launch/rtabmap.launch.py
-COPY --chown=$USER ./configs/nav2_params.yaml /opt/ros/humble/share/nav2_bringup/params/nav2_params.yaml
-USER $USER
 ##############################################################################
 ##                                 Build ROS and run                        ##
 ##############################################################################
 WORKDIR /home/$USER/spot_ros2_ws
 
-COPY --chown=$USER --chmod=0755 ./entrypoint.sh /home/$USER/spot_ros2_ws/entrypoint.sh
+COPY --chown=$USER --chmod=0755 docker/spot-ros2/entrypoint.sh /home/$USER/spot_ros2_ws/entrypoint.sh
 CMD [ "/bin/bash" ]
 
 ENTRYPOINT ["./entrypoint.sh"]

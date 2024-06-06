@@ -1,15 +1,20 @@
 #!/bin/bash
 source /opt/ros/$ROS_DISTRO/setup.bash
-source /home/robot/spot_ros2_ws/install/setup.bash
 
 ros2 launch rtabmap_launch rtabmap.launch.py \
-    rtabmap_args:="--delete_db_on_start" \
-    rgb_topic:=/hkaspot/camera/frontright/image \
-    depth_topic:=/hkaspot/depth_registered/frontright/image \
-    camera_info_topic:=/hkaspot/camera/fronright/camera_info \
+    rgb_topic:=/hkaspot/camera/back/image \
+    depth_topic:=/hkaspot/depth_registered/back/image \
+    camera_info_topic:=/hkaspot/camera/back/camera_info \
+    database_path:=/home/robot/spot-perception/map/rtabmap.db \
+    odom_frame_id:=hkaspot/odom \
     odom_topic:=/hkaspot/odometry \
-    frame_id:=/hkaspot/base_link \
+    visual_odometry:=false \
+    frame_id:=hkaspot/body \
+    subscribe_depth:=false \
+    subscribe_rgbd:=false \
+    rgbd_sync:=true \
     approx_sync:=true \
-    wait_imu_to_init:=false \
+    queue_size:=1000 \
     qos:=1 \
-    rviz:=true
+    rviz:=true \
+    localization:=true
