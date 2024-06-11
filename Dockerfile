@@ -100,7 +100,7 @@ RUN git clone https://github.com/bdaiinstitute/spot_ros2.git
 
 WORKDIR /home/$USER/spot_ros2_ws/src/spot_ros2
 
-RUN git submodule init && git submodule update
+RUN git checkout -b b929e464a370ac65eb0bbf570fd84af34568ef36 && git submodule init && git submodule update
 
 RUN yes|./install_spot_ros2.sh --arm64
 
@@ -120,6 +120,8 @@ COPY --chown=$USER --chmod=0444 ./configs/spot_ros_config.yaml /home/$USER/spot_
 USER root
 
 COPY --chown=$USER --chmod=0444 ./launch/rtabmap.launch.py /opt/ros/humble/share/rtabmap_launch/launch/rtabmap.launch.py
+#COPY --chown=$USER --chmod=0444 ./launch/navigation_launch.py /opt/ros/humble/share/nav2_bringup/launch/navigation_launch.py
+COPY --chown=$USER --chmod=0444 ./configs/rgbd.rviz /opt/ros/humble/share/rtabmap_launch/launch/config/rgbd.rviz
 COPY --chown=$USER ./configs/nav2_params.yaml /opt/ros/humble/share/nav2_bringup/params/nav2_params.yaml
 USER $USER
 ##############################################################################
