@@ -96,11 +96,13 @@ WORKDIR /home/$USER/spot_ros2_ws/src
 
 #RUN rosdep update && rosdep install --from-paths . --ignore-src -r -y
 
-RUN git clone https://github.com/bdaiinstitute/spot_ros2.git
+ADD "https://www.random.org/cgi-bin/randbyte?nbytes=10&format=h" skipcache
+
+RUN git clone https://github.com/Banane01/spot_ros2.git
 
 WORKDIR /home/$USER/spot_ros2_ws/src/spot_ros2
 
-RUN git checkout -b b929e464a370ac65eb0bbf570fd84af34568ef36 && git submodule init && git submodule update
+RUN git checkout -b NavigateTo_bugfix && git submodule init && git submodule update
 
 RUN yes|./install_spot_ros2.sh --arm64
 
