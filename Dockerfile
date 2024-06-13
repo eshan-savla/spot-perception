@@ -96,7 +96,7 @@ WORKDIR /home/$USER/spot_ros2_ws/src
 
 #RUN rosdep update && rosdep install --from-paths . --ignore-src -r -y
 
-ADD "https://www.random.org/cgi-bin/randbyte?nbytes=10&format=h" skipcache
+# ADD "https://www.random.org/cgi-bin/randbyte?nbytes=10&format=h" skipcache
 
 RUN git clone https://github.com/Banane01/spot_ros2.git
 
