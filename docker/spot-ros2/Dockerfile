@@ -79,13 +79,17 @@ RUN git clone https://github.com/bdaiinstitute/spot_ros2.git
 
 WORKDIR /home/$USER/spot_ros2_ws/src/spot_ros2
 
-RUN git submodule init && git submodule update && yes|./install_spot_ros2.sh --arm64 && mkdir -p /home/$USER/spot_ros2_ws/src/spot_ros2/configs
+RUN git checkout -b b929e464a370ac65eb0bbf570fd84af34568ef36 && git submodule init && git submodule update && yes|./install_spot_ros2.sh --arm64 && mkdir -p /home/$USER/spot_ros2_ws/src/spot_ros2/configs
+
+# COPY --chown=$USER configs/CMakeLists.txt /home/$USER/spot_ros2_ws/src/spot_ros2/spot_driver/CMakeLists.txt
+
+# COPY --chown=$USER --chmod=0444 launch/translate_node.py /home/$USER/spot_ros2_ws/src/spot_ros2/spot_driver/spot_driver/translate_node.py
 
 WORKDIR /home/$USER/spot_ros2_ws
 
 RUN . /opt/ros/$ROS_DISTRO/setup.sh && colcon build --symlink-install --packages-ignore proto2ros_tests --cmake-args -DCMAKE_BUILD_TYPE=Release
 
-COPY --chown=$USER --chmod=0755 configs/spot_ros_config.yaml /home/$USER/spot_ros2_ws/src/spot_ros2/configs/spot_ros_config.yaml
+COPY --chown=$USER --chmod=0444 configs/spot_ros_config.yaml /home/$USER/spot_ros2_ws/src/spot_ros2/configs/spot_ros_config.yaml
 
 ##############################################################################
 ##                                 Build ROS and run                        ##
@@ -96,4 +100,3 @@ COPY --chown=$USER --chmod=0755 docker/spot-ros2/entrypoint.sh /home/$USER/spot_
 CMD [ "/bin/bash" ]
 
 ENTRYPOINT ["./entrypoint.sh"]
-
