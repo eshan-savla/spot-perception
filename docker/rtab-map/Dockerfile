@@ -73,8 +73,9 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive && \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --chown=$USER --chmod=0444 launch/rtabmap.launch.py /opt/ros/humble/share/rtabmap_launch/launch/rtabmap.launch.py
+COPY --chown=$USER --chmod=0444 launch/navigation_launch.py /opt/ros/humble/share/nav2_bringup/launch/navigation_launch.py
+COPY --chown=$USER --chmod=0444 configs/rgbd.rviz /opt/ros/humble/share/rtabmap_launch/launch/config/rgbd.rviz
 COPY --chown=$USER configs/nav2_params.yaml /opt/ros/humble/share/nav2_bringup/params/nav2_params.yaml
-
 USER ${USER}
 WORKDIR /home/${USER}
 COPY --chown=$USER:$USER --chmod=0755 docker/rtab-map/entrypoint.sh /home/$USER/entrypoint.sh
