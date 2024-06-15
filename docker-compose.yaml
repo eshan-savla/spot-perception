@@ -16,6 +16,7 @@ services:
     stdin_open: true
     container_name: spot_ros2_container
     tty: true
+    network_mode: "host"
     environment:
       - DISPLAY=${DISPLAY}
       - QT_X11_NO_MITSHM=1
@@ -37,6 +38,7 @@ services:
     stdin_open: true
     container_name: rtabmap_ros2_container
     tty: true
+    network_mode: "host"
     environment:
       - DISPLAY=${DISPLAY}
       - QT_X11_NO_MITSHM=1
