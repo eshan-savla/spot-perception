@@ -11,7 +11,7 @@ ros2 launch rtabmap_launch rtabmap.launch.py \
     visual_odometry:=false \
     frame_id:=hkaspot/body \
     subscribe_depth:=false \
-    subscribe_rgbd:=false \
+    subscribe_rgbd:=true \
     rgbd_sync:=true \
     approx_sync:=true \
     queue_size:=1000 \
