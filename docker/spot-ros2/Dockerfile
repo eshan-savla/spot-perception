@@ -87,6 +87,8 @@ RUN git checkout -b b929e464a370ac65eb0bbf570fd84af34568ef36 && git submodule in
 
 WORKDIR /home/$USER/spot_ros2_ws
 
+COPY ./rviz_spot_extensions ./src/rviz_spot_extensions
+
 RUN . /opt/ros/$ROS_DISTRO/setup.sh && colcon build --symlink-install --packages-ignore proto2ros_tests --cmake-args -DCMAKE_BUILD_TYPE=Release
 
 COPY --chown=$USER --chmod=0444 configs/spot_ros_config.yaml /home/$USER/spot_ros2_ws/src/spot_ros2/configs/spot_ros_config.yaml
