@@ -24,7 +24,7 @@ services:
 
   
   rtabmap_ros2_container:
-    image: eshansavla0512/ros2-rtabmap-arm64:latest
+    image: eshansavla0512/ros2-rtabmap-arm64:depth_to_scan
     build:
       context: .
       dockerfile: ./docker/rtab-map/Dockerfile

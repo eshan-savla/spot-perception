@@ -1,6 +1,10 @@
 #!/bin/bash
 source /opt/ros/$ROS_DISTRO/setup.bash
 
+ros2 run depthimage_to_laserscan depthimage_to_laserscan \
+    -r image:=/hkaspot/depth_registered/back/image \
+    -r camera_info:=/hkaspot/depth/back/camera_info \
+    -p range_max:=4 &
 ros2 launch rtabmap_launch rtabmap.launch.py \
     rgb_topic:=/hkaspot/camera/back/image \
     depth_topic:=/hkaspot/depth_registered/back/image \
@@ -10,7 +14,8 @@ ros2 launch rtabmap_launch rtabmap.launch.py \
     odom_topic:=/hkaspot/odometry \
     visual_odometry:=false \
     frame_id:=hkaspot/body \
-    subscribe_depth:=false \
+    subscribe_depth:=true \
+    subscribe_scan:=true \
     subscribe_rgbd:=false \
     rgbd_sync:=true \
     approx_sync:=true \
