@@ -63,15 +63,23 @@ USER root
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive && \
     apt-get install -y ros-humble-desktop=0.10.0-1* \
     ros-humble-desktop-full=0.10.0-1* \
-    ros-$ROS_DISTRO-joint-state-publisher-gui \
     ros-$ROS_DISTRO-rtabmap \
     ros-$ROS_DISTRO-rtabmap-ros \
     ros-$ROS_DISTRO-navigation2 \
     ros-$ROS_DISTRO-nav2-bringup \
+    ros-$ROS_DISTRO-opennav-docking \
+    ros-$ROS_DISTRO-opennav-docking-bt \
     ros-$ROS_DISTRO-slam-toolbox \
     ros-$ROS_DISTRO-joint-state-broadcaster \
+    ros-$ROS_DISTRO-joint-state-publisher-gui \
+    ros-$ROS_DISTRO-tf-transformations \
+    ros-$ROS_DISTRO-xacro ros-$ROS_DISTRO-depth-image-proc \
+    ros-$ROS_DISTRO-tl-expected \
     && rm -rf /var/lib/apt/lists/*
 
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive && \
+    apt-get install -y ros-$ROS_DISTRO-opennav-docking \
+    && rm -rf /var/lib/apt/lists/*
 COPY --chown=$USER --chmod=0444 launch/rtabmap.launch.py /opt/ros/humble/share/rtabmap_launch/launch/rtabmap.launch.py
 COPY --chown=$USER --chmod=0444 launch/navigation_launch.py /opt/ros/humble/share/nav2_bringup/launch/navigation_launch.py
 COPY --chown=$USER --chmod=0444 configs/rgbd.rviz /opt/ros/humble/share/rtabmap_launch/launch/config/rgbd.rviz

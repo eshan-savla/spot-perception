@@ -49,7 +49,6 @@ def generate_launch_description():
         'collision_monitor',
         'bt_navigator',
         'waypoint_follower',
-        'docking_server',
     ]
 
     # Map fully qualified names to relative ones so the node's namespace can be prepended.
@@ -133,7 +132,7 @@ def generate_launch_description():
                 respawn_delay=2.0,
                 parameters=[configured_params],
                 arguments=['--ros-args', '--log-level', log_level],
-                remappings=remappings + [('cmd_vel', '/hkaspot/cmd_vel')],
+                remappings=remappings + [('cmd_vel', 'hkaspot/cmd_vel')],
             ),
             Node(
                 package='nav2_smoother',
@@ -166,7 +165,7 @@ def generate_launch_description():
                 respawn_delay=2.0,
                 parameters=[configured_params],
                 arguments=['--ros-args', '--log-level', log_level],
-                remappings=remappings + [('cmd_vel', '/hkaspot/cmd_vel')],
+                remappings=remappings + [('cmd_vel', 'hkaspot/cmd_vel')],
             ),
             Node(
                 package='nav2_bt_navigator',
@@ -200,23 +199,12 @@ def generate_launch_description():
                 parameters=[configured_params],
                 arguments=['--ros-args', '--log-level', log_level],
                 remappings=remappings
-                + [('cmd_vel', '/hkaspot/cmd_vel')],
+                + [('cmd_vel', 'hkaspot/cmd_vel')],
             ),
             Node(
                 package='nav2_collision_monitor',
                 executable='collision_monitor',
                 name='collision_monitor',
-                output='screen',
-                respawn=use_respawn,
-                respawn_delay=2.0,
-                parameters=[configured_params],
-                arguments=['--ros-args', '--log-level', log_level],
-                remappings=remappings,
-            ),
-            Node(
-                package='opennav_docking',
-                executable='opennav_docking',
-                name='docking_server',
                 output='screen',
                 respawn=use_respawn,
                 respawn_delay=2.0,
@@ -247,7 +235,7 @@ def generate_launch_description():
                         plugin='nav2_controller::ControllerServer',
                         name='controller_server',
                         parameters=[configured_params],
-                        remappings=remappings + [('cmd_vel', '/hkaspot/cmd_vel')],
+                        remappings=remappings + [('cmd_vel', 'hkaspot/cmd_vel')],
                     ),
                     ComposableNode(
                         package='nav2_smoother',
@@ -268,7 +256,7 @@ def generate_launch_description():
                         plugin='behavior_server::BehaviorServer',
                         name='behavior_server',
                         parameters=[configured_params],
-                        remappings=remappings + [('cmd_vel', '/hkaspot/cmd_vel')],
+                        remappings=remappings + [('cmd_vel', 'hkaspot/cmd_vel')],
                     ),
                     ComposableNode(
                         package='nav2_bt_navigator',
@@ -290,19 +278,12 @@ def generate_launch_description():
                         name='velocity_smoother',
                         parameters=[configured_params],
                         remappings=remappings
-                        + [('cmd_vel', '/hkaspot/cmd_vel')],
+                        + [('cmd_vel', 'hkaspot/cmd_vel')],
                     ),
                     ComposableNode(
                         package='nav2_collision_monitor',
                         plugin='nav2_collision_monitor::CollisionMonitor',
                         name='collision_monitor',
-                        parameters=[configured_params],
-                        remappings=remappings,
-                    ),
-                    ComposableNode(
-                        package='opennav_docking',
-                        plugin='opennav_docking::DockingServer',
-                        name='docking_server',
                         parameters=[configured_params],
                         remappings=remappings,
                     ),
