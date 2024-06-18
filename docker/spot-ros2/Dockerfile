@@ -75,15 +75,11 @@ RUN mkdir -p /home/$USER/spot_ros2_ws/src
 	
 WORKDIR /home/$USER/spot_ros2_ws/src
 
-RUN git clone https://github.com/bdaiinstitute/spot_ros2.git
+RUN git clone https://github.com/Banane01/spot_ros2.git
 
 WORKDIR /home/$USER/spot_ros2_ws/src/spot_ros2
 
-RUN git checkout -b b929e464a370ac65eb0bbf570fd84af34568ef36 && git submodule init && git submodule update && yes|./install_spot_ros2.sh --arm64 && mkdir -p /home/$USER/spot_ros2_ws/src/spot_ros2/configs
-
-# COPY --chown=$USER configs/CMakeLists.txt /home/$USER/spot_ros2_ws/src/spot_ros2/spot_driver/CMakeLists.txt
-
-# COPY --chown=$USER --chmod=0444 launch/translate_node.py /home/$USER/spot_ros2_ws/src/spot_ros2/spot_driver/spot_driver/translate_node.py
+RUN git checkout NavigateTo_bugfix && git submodule init && git submodule update && yes|./install_spot_ros2.sh --arm64 && mkdir -p /home/$USER/spot_ros2_ws/src/spot_ros2/configs
 
 WORKDIR /home/$USER/spot_ros2_ws
 
