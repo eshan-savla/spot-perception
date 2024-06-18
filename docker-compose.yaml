@@ -12,6 +12,7 @@ services:
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
       - ./:/home/robot/spot-perception:rw
+      - /home/spot/spot_map:/home/robot/spot_map:rw
     privileged: true
     stdin_open: true
     container_name: spot_ros2_container
