@@ -205,7 +205,7 @@ local_costmap:
         observation_sources: pointcloud
         pointcloud:
           topic: /obstacles
-          max_obstacle_height: 2.0
+          max_obstacle_height: 3.0
           clearing: True
           marking: True
           data_type: "PointCloud2"
@@ -235,7 +235,7 @@ global_costmap:
         observation_sources: pointcloud
         pointcloud:
           topic: /scan
-          max_obstacle_height: 2.0
+          max_obstacle_height: 3.0
           clearing: True
           marking: True
           data_type: "PointCloud2"
