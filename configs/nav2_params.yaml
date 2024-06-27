@@ -204,7 +204,7 @@ local_costmap:
         enabled: True
         observation_sources: pointcloud
         pointcloud:
-          topic: /obstacles
+          topic: /scan
           max_obstacle_height: 3.0
           clearing: True
           marking: True
