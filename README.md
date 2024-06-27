@@ -1,39 +1,88 @@
 # spot-perception
 
-### Ausführen des Docker-Containers auf Jetson:
+This repository extends the [ROS2 Package for Spot](https://github.com/bdaiinstitute/spot_ros2) by integrating ROS based SLAM and navigation functionalities. 
 
-1. Terminal in Jetson starten:
-```
-strg + alt + t
-```
+**Important:** As the `humble` branch is outdated and `main` is a rolling release branch, this repository uses a fixed commit to guarantee functionality. This means that newer features of of the Spot ROS2 package might not be available out of the box. However, updating to a newer version of the package is easily possible as long as the config file is updated aptly. 
 
-2. Docker-Image mit spot ros2 driver ziehen und starten
-```
-docker run -it eshansavla0512/ros2-spot-arm64
-```
+The SLAM package is computationally intensive and requires sufficient processing power to function smoothly. During the develepement of this package, a [NVIDIA Jetson Orin 64gb](https://developer.nvidia.com/embedded/learn/jetson-agx-orin-devkit-user-guide/index.html) was used for edge computing locally on Spot. 
 
-Es sollte eine Instanz des Containers starten und kann über eine solch-ähnliche Ausgabe im Terminal erkannt werden:
+### Quick Start:
 
-```
-$ docker run -it eshansavla0512/ros2-spot-arm64
+This assumes you have configured your hardware correctly with Spot. Refer to the [Hardware Section](#hardware-and-interfacing) for more information on configuring and interfacing your hardware directly with spot. 
 
-#
-robot@67f249cc0997:~$
+1. Configure the `spot_ros_config.yaml` under configs with your spot username, password and Payload port IP under hostname:
+```yaml
+username: "user"
+password: "password"
+hostname: "10.0.0.3"
 ```
 
-3. Den folgenden Befehl ausführen, um den ROS-Distro zu sourcen
+2. Select a name for spot and add it to the entrypoint file under `docker/spot-ros2/entrypoint.sh`. The file looks like this:
+```bash
+#!/bin/bash
+source /opt/ros/$ROS_DISTRO/setup.bash
+source /home/robot/spot_ros2_ws/install/setup.bash
+export $SPOT_NAME="myspot" # --> HERE
+ros2 launch spot_driver spot_driver.launch.py config_file:=./src/spot_ros2/configs/spot_ros_config.yaml spot_name:=$SPOT_NAME publish_point_clouds:=True
+
 ```
+
+3. select your preferred odom frame in `spot_ros_config.yaml`under configs using your **SPOT_NAME**:
+```yaml
+preferred_odom_frame: "myspot/odom" # pass either odom/vision. This frame will become the parent of body in tf2 tree and will be used in odometry topic. https://dev.bostondynamics.com/docs/concepts/geometry_and_frames.html?highlight=frame#frames-in-the-spot-robot-world for more info.
+```
+
+4. Pull the latest docker images:
+**Note**: This requires an account at [dockerhub](www.dockerhub.com) and logging on locally on your machine
+
+```bash
+docker pull eshansavla0512/ros2-spot-arm64:rework
+docker pull eshansavla0512/ros2-rtabmap-arm64:latest
+```
+
+5. Alternatively, you can build the containers locally on your amd64 machine or on arm64 machine with at least 16gb of RAM
+
+```bash
+bash ./build_docker.sh # for build on native arm64 architecture
+bash ./build_docker.sh --cross-compile # for emulating arm64 builds on amd64 architecture
+```
+
+**Note**: Depending on your internet connection, this can take between 30-60 mins for a fresh build.
+
+6. Running the containers
+To run the containers, just run:
+```bash
+bash start_docker.sh
+```
+This will launch the docker compose command which takes care of starting both containers - the spot ros2 driver and slam + nav2 container with the appropriate parameters.
+
+7. Start Navigating with Nav2 on your local machine:
+**Note:** This requires you to locally install ros2 humble and nav2 on your own machine. If you have them installed in a container, run the same command inside your container.
+
+```bash
 source /opt/ros/humble/setup.bash
+ros2 launch nav2_bringup rviz.launch.py
 ```
 
-4. Den folgenden Befehl ausführen, um zum ROS-Workspace Ordner zu wechseln
-```
-cd spot_ros2_ws
-```
+Your screen should look something like this:
 
-5. Folgenden Befehl ausführen, um den ROS-Package zu bauen
-```
-colcon build --symlink-install --packages-ignore proto2ros_tests
-```
+%TODO: Add screenshot of rviz with map
 
-Ausgaben bspw. mit Screenshots protokollieren zur späteren Auswertung. Ich möchte sehen, ob die Sachen richtig bauen, und falls nicht, welche Fehler entstehen.
+**Hint -** You can blend spots model in rviz by selecting the right topic under RobotModel>%TODO finish rest
+
+8. Using the *Nav2 Goal* option you can click on your goal point and drag your mouse while holding down the left button to provide your goal orientation for spot.
+
+%TODO: Add screenshot with arrow and planned trajectory
+
+### Hardware and Interfacing
+
+##### Mount for Jetson:
+%TODO: Bild + paar Sätze
+
+
+##### AGX Connector:
+%TODO: Bild + paar Sätze
+
+
+##### Interfacing:
+%TODO: Paar Sätze über Verkablung + Konfiguration über Webinterface
