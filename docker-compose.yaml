@@ -22,10 +22,9 @@ services:
       - DISPLAY=${DISPLAY}
       - QT_X11_NO_MITSHM=1
     platform: "linux/arm64/v8"
-
   
   rtabmap_ros2_container:
-    image: eshansavla0512/ros2-rtabmap-arm64:latest
+    image: eshansavla0512/ros2-rtabmap-arm64:mapping
     build:
       context: .
       dockerfile: ./docker/rtab-map/Dockerfile

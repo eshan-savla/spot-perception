@@ -16,9 +16,9 @@ ros2 launch rtabmap_launch rtabmap.launch.py \
     approx_sync:=false \
     queue_size:=1000 \
     qos:=1 \
-    rviz:=false \
-    rtabmap_viz:=false \
-    localization:=true & 
+    rviz:=true \
+    rtabmap_viz:=true \
+    localization:=false & 
 ros2 run rtabmap_util point_cloud_xyz --ros-args -r depth/image:=/hkaspot/depth_registered/frontleft/image -r depth/camera_info:=/hkaspot/depth_registered/frontleft/camera_info -p voxel_size:=0.05 -p decimation:=4 -p max_depth:=10.0 -p approx_sync:=false &
 ros2 run rtabmap_util obstacles_detection --ros-args -p frame_id:=hkaspot/body -p map_frame_id:=map &
 ros2 launch nav2_bringup navigation_launch.py params_file:=spot-perception/configs/nav2_params.yaml
