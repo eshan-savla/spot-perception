@@ -13,7 +13,7 @@ ros2 launch rtabmap_launch rtabmap.launch.py \
     subscribe_depth:=false \
     subscribe_rgbd:=true \
     rgbd_sync:=true \
-    approx_sync:=true \
+    approx_sync:=false \
     queue_size:=1000 \
     qos:=1 \
     rviz:=false \
