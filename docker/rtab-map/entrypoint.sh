@@ -13,11 +13,11 @@ ros2 launch rtabmap_launch rtabmap.launch.py \
     subscribe_depth:=false \
     subscribe_rgbd:=true \
     rgbd_sync:=true \
-    approx_sync:=false \
+    approx_sync:=true \
     queue_size:=1000 \
     qos:=1 \
-    rviz:=false \
-    rtabmap_viz:=false \
+    rviz:=true \
+    rtabmap_viz:=true \
     localization:=true & 
 ros2 run rtabmap_util point_cloud_xyz --ros-args -r depth/image:=/hkaspot/depth_registered/frontleft/image -r depth/camera_info:=/hkaspot/depth_registered/frontleft/camera_info -p voxel_size:=0.05 -p decimation:=4 -p max_depth:=10.0 -p approx_sync:=false &
 ros2 run rtabmap_util obstacles_detection --ros-args -p frame_id:=hkaspot/body -p map_frame_id:=map &
