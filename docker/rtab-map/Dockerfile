@@ -1,5 +1,5 @@
 # Built docker image available publically for arm64 under eshansavla0512/ros2-spot-arm64
-FROM arm64v8/ros:humble-ros-base-jammy
+FROM introlab3it/rtabmap_ros:humble-latest
 
 ##############################################################################
 ##                                 Base Image                               ##
@@ -61,10 +61,7 @@ ENV FASTRTPS_DEFAULT_PROFILES_FILE=/home/$USER/dds_profile.xml
 USER root
 
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive && \
-    apt-get install -y ros-humble-desktop=0.10.0-1* \
-    ros-humble-desktop-full=0.10.0-1* \
-    ros-$ROS_DISTRO-rtabmap \
-    ros-$ROS_DISTRO-rtabmap-ros \
+    apt-get install -y \
     ros-$ROS_DISTRO-navigation2 \
     ros-$ROS_DISTRO-nav2-bringup \
     ros-$ROS_DISTRO-opennav-docking \
