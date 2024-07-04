@@ -62,14 +62,8 @@ USER root
 
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive && \
     apt-get install -y \
-    ros-$ROS_DISTRO-navigation2 \
-    ros-$ROS_DISTRO-nav2-bringup \
     ros-$ROS_DISTRO-opennav-docking \
     ros-$ROS_DISTRO-opennav-docking-bt \
-    ros-$ROS_DISTRO-slam-toolbox \
-    ros-$ROS_DISTRO-joint-state-broadcaster \
-    ros-$ROS_DISTRO-joint-state-publisher-gui \
-    ros-$ROS_DISTRO-tf-transformations \
     ros-$ROS_DISTRO-xacro ros-$ROS_DISTRO-depth-image-proc \
     ros-$ROS_DISTRO-tl-expected \
     && rm -rf /var/lib/apt/lists/*
