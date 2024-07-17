@@ -1,5 +1,5 @@
 # Built docker image available publically for arm64 under eshansavla0512/ros2-spot-arm64
-FROM arm64v8/ros:humble-ros-base-jammy
+FROM introlab3it/rtabmap_ros:humble-latest
 
 ##############################################################################
 ##                                 Base Image                               ##
@@ -46,7 +46,7 @@ RUN groupadd -g "$GID" "$USER"  && \
     usermod -aG realtime "$USER" && \
     echo "$USER:$PASSWORD" | chpasswd && \
     echo "%sudo ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/sudogrp
-RUN echo "source /opt/ros/$ROS_DISTRO/setup.bash" >> /etc/bash.bashrc
+RUN echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> /etc/bash.bashrc
 RUN echo "export ROS_DOMAIN_ID=${DOMAIN_ID}" >> /etc/bash.bashrc
 
 COPY docker/dds_profile.xml /home/$USER
@@ -61,18 +61,12 @@ ENV FASTRTPS_DEFAULT_PROFILES_FILE=/home/$USER/dds_profile.xml
 USER root
 
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive && \
-    apt-get install -y ros-humble-desktop=0.10.0-1* \
-    ros-humble-desktop-full=0.10.0-1* \
-    ros-$ROS_DISTRO-rtabmap \
-    ros-$ROS_DISTRO-rtabmap-ros \
+    apt-get install -y \
     ros-$ROS_DISTRO-navigation2 \
+    ros-$ROS_DISTRO-rviz2 \
     ros-$ROS_DISTRO-nav2-bringup \
     ros-$ROS_DISTRO-opennav-docking \
     ros-$ROS_DISTRO-opennav-docking-bt \
-    ros-$ROS_DISTRO-slam-toolbox \
-    ros-$ROS_DISTRO-joint-state-broadcaster \
-    ros-$ROS_DISTRO-joint-state-publisher-gui \
-    ros-$ROS_DISTRO-tf-transformations \
     ros-$ROS_DISTRO-xacro ros-$ROS_DISTRO-depth-image-proc \
     ros-$ROS_DISTRO-tl-expected \
     && rm -rf /var/lib/apt/lists/*
