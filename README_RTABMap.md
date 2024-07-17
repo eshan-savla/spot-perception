@@ -212,7 +212,7 @@ ros2 launch rtabmap_launch rtabmap.launch.py \
 This starts RTAB-Map in localisation mode. As the navigation of Spot mini takes place via a separate computer in the same network anyway, no visualisation needs to be started directly on the Jetson. For this reason, RViz and RTABMap_Viz are both set to FALSE. The configuration of Localisation to TRUE is crucial. Only then will RTAB-Map be started in localisation mode and no map will be recorded. 
 
 
-## Subsequent optimisation of the map
+## Subsequent optimization of the map
 
 RTAB-Map already offers another tool, rtabmap-databaseViewer, for subsequent optimisation of the map after recording. 
 
