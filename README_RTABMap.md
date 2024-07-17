@@ -223,7 +223,8 @@ rtabmap-databaseViewer /home/robot/spot-perception/map/rtabmap_copy.db
 ```
 
 Es öffnet sich der Database Viewer, wie in der folgenden Abbildung zu sehen:
-Bild DatabaseViewer
+
+![dbviewer](https://github.com/user-attachments/assets/8cb8d088-4981-49ca-9ed9-c084b6d559f0)
 
 Mit Hilfe dieses Tools können alle in der Karte enthaltenen Bilder betrachtet und angepasst werden. Über Edit > Detect more loop closures wird der gesamte Datensatz noch einmal durchgeschaut und optisch gleiche Punkte gefunden, die die Knoten in der Karte schließen können. 
 ...
