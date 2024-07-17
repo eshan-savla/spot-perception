@@ -46,7 +46,7 @@ RUN groupadd -g "$GID" "$USER"  && \
     usermod -aG realtime "$USER" && \
     echo "$USER:$PASSWORD" | chpasswd && \
     echo "%sudo ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/sudogrp
-RUN echo "source /opt/ros/$ROS_DISTRO/setup.bash" >> /etc/bash.bashrc
+RUN echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> /etc/bash.bashrc
 RUN echo "export ROS_DOMAIN_ID=${DOMAIN_ID}" >> /etc/bash.bashrc
 
 COPY docker/dds_profile.xml /home/$USER
@@ -62,6 +62,9 @@ USER root
 
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive && \
     apt-get install -y \
+    ros-$ROS_DISTRO-navigation2 \
+    ros-$ROS_DISTRO-rviz2 \
+    ros-$ROS_DISTRO-nav2-bringup \
     ros-$ROS_DISTRO-opennav-docking \
     ros-$ROS_DISTRO-opennav-docking-bt \
     ros-$ROS_DISTRO-xacro ros-$ROS_DISTRO-depth-image-proc \
