@@ -1,16 +1,5 @@
 # Built docker image available publically for arm64 under eshansavla0512/ros2-spot-arm64
 FROM arm64v8/ros:humble-ros-base-jammy
-
-# install ros2 packages
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    ros-humble-desktop=0.10.0-1* \
-    && rm -rf /var/lib/apt/lists/*
-
-#install desktop-full packages
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    ros-humble-desktop-full=0.10.0-1* \
-    && rm -rf /var/lib/apt/lists/*
-    
 ##############################################################################
 ##                                 Base Image                               ##
 ##############################################################################
@@ -58,53 +47,39 @@ RUN groupadd -g "$GID" "$USER"  && \
     echo "%sudo ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/sudogrp
 RUN echo "source /opt/ros/$ROS_DISTRO/setup.bash" >> /etc/bash.bashrc
 RUN echo "export ROS_DOMAIN_ID=${DOMAIN_ID}" >> /etc/bash.bashrc
+
+COPY docker/dds_profile.xml /home/$USER
+RUN chown $USER:$USER /home/$USER/dds_profile.xml
+ENV FASTRTPS_DEFAULT_PROFILES_FILE=/home/$USER/dds_profile.xml
+
 ##############################################################################
-##                                 Nav2 Dependecies                         ##
+##                               install dependencies and ROS2 and Nav2     ##
 ##############################################################################
 USER root
-RUN apt-get update && apt-get install -y ros-$ROS_DISTRO-navigation2 \
-                                         ros-$ROS_DISTRO-nav2-bringup \
-                                         ros-$ROS_DISTRO-slam-toolbox \
-                                         && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive && apt-get install -y --no-install-recommends ros-$ROS_DISTRO-desktop \
+    ros-$ROS_DISTRO-desktop-full \
+    ros-$ROS_DISTRO-joint-state-publisher-gui \
+    ros-$ROS_DISTRO-joint-state-broadcaster \
+    ros-$ROS_DISTRO-ros-ign \
+    && apt-get -y autoremove \
+    && apt-get clean autoclean \
+    && rm -fr /var/lib/apt/lists/*
 
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive && \
-    apt-get install -y ros-$ROS_DISTRO-joint-state-publisher-gui \
-                       ros-$ROS_DISTRO-ros-ign \
-                       ros-$ROS_DISTRO-rtabmap \
-                       ros-$ROS_DISTRO-rtabmap-ros \
-                    #   ros-$ROS_DISTRO-gazebo-ros-pkgs \
-                    #    ros-$ROS_DISTRO-robot-localization \
-                    #   ros-$ROS_DISTRO-gazebo-ros2-control \
-                       ros-$ROS_DISTRO-joint-state-broadcaster \
-                    #    ros-$ROS_DISTRO-diff-drive-controller && \
-    && rm -rf /var/lib/apt/lists/*
-
-
-
+    # removed for now:     ros-$ROS_DISTRO-rmw-cyclonedds-cpp \
 ##############################################################################
 ##                               Spot-ROS2 Drivers                          ##
 ##############################################################################
-RUN apt-get install -y git
-
 USER $USER
 
 RUN mkdir -p /home/$USER/spot_ros2_ws/src
 	
 WORKDIR /home/$USER/spot_ros2_ws/src
 
-#RUN git clone https://github.com/introlab/rtabmap.git && git clone --branch ros2 https://github.com/introlab/rtabmap_ros.git
-
-#RUN rosdep update && rosdep install --from-paths . --ignore-src -r -y
-
 RUN git clone https://github.com/Banane01/spot_ros2.git
 
 WORKDIR /home/$USER/spot_ros2_ws/src/spot_ros2
 
-RUN git checkout NavigateTo_bugfix && git submodule init && git submodule update
-
-RUN yes|./install_spot_ros2.sh --arm64
-
-RUN mkdir -p /home/$USER/spot_ros2_ws/src/spot_ros2/configs
+RUN git checkout NavigateTo_bugfix && git submodule init && git submodule update && yes|./install_spot_ros2.sh --arm64 && mkdir -p /home/$USER/spot_ros2_ws/src/spot_ros2/configs
 
 WORKDIR /home/$USER/spot_ros2_ws
 
@@ -114,23 +89,14 @@ COPY --chown=$USER --chmod=0444 ./launch/translate_node.py /home/$USER/spot_ros2
 
 RUN . /opt/ros/$ROS_DISTRO/setup.sh && colcon build --symlink-install --packages-ignore proto2ros_tests --cmake-args -DCMAKE_BUILD_TYPE=Release
 
-COPY --chown=$USER --chmod=0444 ./configs/spot_ros_config.yaml /home/$USER/spot_ros2_ws/src/spot_ros2/configs/spot_ros_config.yaml
+COPY --chown=$USER --chmod=0444 configs/spot_ros_config.yaml /home/$USER/spot_ros2_ws/src/spot_ros2/configs/spot_ros_config.yaml
 
-
-USER root
-
-COPY --chown=$USER --chmod=0444 ./launch/rtabmap.launch.py /opt/ros/humble/share/rtabmap_launch/launch/rtabmap.launch.py
-#COPY --chown=$USER --chmod=0444 ./launch/navigation_launch.py /opt/ros/humble/share/nav2_bringup/launch/navigation_launch.py
-COPY --chown=$USER --chmod=0444 ./configs/rgbd.rviz /opt/ros/humble/share/rtabmap_launch/launch/config/rgbd.rviz
-COPY --chown=$USER ./configs/nav2_params.yaml /opt/ros/humble/share/nav2_bringup/params/nav2_params.yaml
-USER $USER
 ##############################################################################
 ##                                 Build ROS and run                        ##
 ##############################################################################
 WORKDIR /home/$USER/spot_ros2_ws
 
-COPY --chown=$USER --chmod=0755 ./entrypoint.sh /home/$USER/spot_ros2_ws/entrypoint.sh
+COPY --chown=$USER --chmod=0755 docker/spot-ros2/entrypoint.sh /home/$USER/spot_ros2_ws/entrypoint.sh
 CMD [ "/bin/bash" ]
 
 ENTRYPOINT ["./entrypoint.sh"]
-

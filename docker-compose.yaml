@@ -2,32 +2,48 @@ version: '2'
 
 services:
   spot_ros2_container:
+    image: eshansavla0512/ros2-spot-arm64:rework
     build:
       context: .
-      dockerfile: Dockerfile
-    command: bash ./entrypoint.sh
+      dockerfile: ./docker/spot-ros2/Dockerfile
+      platforms: 
+        - "linux/arm64/v8"
+    # command: bash ./star.sh
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
-      - /home/spot/spot-perception:/home/robot/spot-perception:rw
+      - ./:/home/robot/spot-perception:rw
+      - /home/spot/spot_map:/home/robot/spot_map:rw
     privileged: true
     stdin_open: true
+    container_name: spot_ros2_container
+    tty: true
+    network_mode: "host"
     environment:
       - DISPLAY=${DISPLAY}
       - QT_X11_NO_MITSHM=1
-    network_mode: host
-    ipc: host
+    platform: "linux/arm64/v8"
+
   
   rtabmap_ros2_container:
+    image: eshansavla0512/ros2-rtabmap-arm64:latest
     build:
-      context: ./docker/rtab-map
-      dockerfile: Dockerfile
-    command: bash ./entrypoint.sh
+      context: .
+      dockerfile: ./docker/rtab-map/Dockerfile
+      platforms: 
+        - "linux/arm64/v8"
+    # command: bash ./entrypoint.sh
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
-      - /home/spot/spot-perception:/home/robot/spot-perception:rw
+      - ./:/home/robot/spot-perception:rw
     privileged: true
     stdin_open: true
+    container_name: rtabmap_ros2_container
+    tty: true
+    network_mode: "host"
     environment:
       - DISPLAY=${DISPLAY}
       - QT_X11_NO_MITSHM=1
+    platform: "linux/arm64/v8"
+    depends_on:
+      - spot_ros2_container
     
