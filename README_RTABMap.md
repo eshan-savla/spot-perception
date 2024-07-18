@@ -1,6 +1,6 @@
 # RTAB-Map
 
-RTAB-Map (Real-Time Appearance-Based Mapping) is an RGB-D Graph SLAM (Simultaneous Localisation and Mapping) method for map recording that utilizes a global Bayesian loop closure detector. This detector employs a bag-of-words approach to assess the likelihood of whether a new image corresponds to a previously visited location or a new one. When a loop closure hypothesis is confirmed, a new constraint is introduced into the map's graph, and a graph optimizer works to minimize errors in the map. A memory management strategy is implemented to restrict the number of locations used for loop closure detection and graph optimization, ensuring that real-time performance is maintained even in large-scale environments.
+RTAB-Map (Real-Time Appearance-Based Mapping) is an RGB-D Graph SLAM (Simultaneous Localization and Mapping) method for map recording that utilizes a global Bayesian loop closure detector. This detector employs a bag-of-words approach to assess the likelihood of whether a new image corresponds to a previously visited location or a new one. When a loop closure hypothesis is confirmed, a new constraint is introduced into the map's graph, and a graph optimizer works to minimize errors in the map. A memory management strategy is implemented to restrict the number of locations used for loop closure detection and graph optimization, ensuring that real-time performance is maintained even in large-scale environments.
 
 The documentation and a few tutorials for RTAB-Map can be found on the following page: [RTAB-Map ROS Wiki](http://wiki.ros.org/rtabmap_ros/noetic_and_newer)
 
@@ -143,7 +143,7 @@ As already mentioned in Overview, RTAB-Map should also be started for navigation
 localization:=false
 ```
 
-For navigation with nav2 Navigation Stack, RTAB-Map provides the map and the localisation of the Spot mini. The parameter should then be set to TRUE:
+For navigation with nav2 Navigation Stack, RTAB-Map provides the map and the localization of the Spot mini. The parameter should then be set to TRUE:
 
 ```bash
 localization:=true
@@ -177,11 +177,11 @@ ros2 launch rtabmap_launch rtabmap.launch.py \
     localization:=false
 ```
 
-As you can see, localisation has been deactivated so that RTAB-Map starts in mapping mode. RViz and the RTAB-Map visualisation should now start. Recording is then already active. 
+As you can see, localization has been deactivated so that RTAB-Map starts in mapping mode. RViz and the RTAB-Map visualisation should now start. Recording is then already active. 
 
 To record, Spot mini should be controlled manually using the Boston Dynamics remote control. The map should now be three-dimensional in both visualisations. 
 
-Due to the rather low resolution of the Spot internal cameras of 640x480, the robot should not be moved too quickly. It can also be useful to rotate the robot at various points. This allows more image data to be taken into account when creating the map. Care should also be taken to ensure that the robot moves smoothly and experiences few vibrations, as these can affect the accuracy of the odometry data and thus cause errors in the localisation on the map. 
+Due to the rather low resolution of the Spot internal cameras of 640x480, the robot should not be moved too quickly. It can also be useful to rotate the robot at various points. This allows more image data to be taken into account when creating the map. Care should also be taken to ensure that the robot moves smoothly and experiences few vibrations, as these can affect the accuracy of the odometry data and thus cause errors in the localization on the map. 
 
 The database for the map is constantly updated during recording. Nevertheless, it is advisable to save the map again at the end using the RTAB map visualisation.
 
@@ -211,7 +211,7 @@ ros2 launch rtabmap_launch rtabmap.launch.py \
     localization:=true
 ```
 
-This starts RTAB-Map in localisation mode. As the navigation of Spot mini takes place via a separate computer in the same network anyway, no visualisation needs to be started directly on the Jetson. For this reason, RViz and RTABMap_Viz are both set to FALSE. The configuration of Localisation to TRUE is crucial. Only then will RTAB-Map be started in localisation mode and no map will be recorded. 
+This starts RTAB-Map in localization mode. As the navigation of Spot mini takes place via a separate computer in the same network anyway, no visualization needs to be started directly on the Jetson. For this reason, RViz and RTABMap_Viz are both set to FALSE. The configuration of Localization to TRUE is crucial. Only then will RTAB-Map be started in localization mode and no map will be recorded. 
 
 
 ## Subsequent optimization of the map
@@ -224,11 +224,11 @@ The application can be started with the following command. The path belonging to
 rtabmap-databaseViewer /home/robot/spot-perception/map/rtabmap_copy.db
 ```
 
-Es öffnet sich der Database Viewer, wie in der folgenden Abbildung zu sehen:
+The Database Viewer opens, as shown in the following illustration:
 
 ![dbviewer](https://github.com/user-attachments/assets/8cb8d088-4981-49ca-9ed9-c084b6d559f0)
 
-Mit Hilfe dieses Tools können alle in der Karte enthaltenen Bilder betrachtet und angepasst werden. Über Edit > Detect more loop closures wird der gesamte Datensatz noch einmal durchgeschaut und optisch gleiche Punkte gefunden, die die Knoten in der Karte schließen können. 
+This tool can be used to view and customise all the images contained in the map. Via Edit > Detect more loop closures, the entire data set is looked through again and optically identical points are found that can close the nodes in the map. 
 ...
 
 
