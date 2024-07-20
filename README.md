@@ -101,10 +101,10 @@ Jetson must be supplied with power and connected correctly to the spot core to e
 
 The following parts are required to copy the setup presented.
 
-• 1x Jetson Orin NX Developer Kit  
-• 1x General Expansion Payload (GXP) module
-• 1x „jetson-platte.prt“ (3D printed)  
-• 1x „jetson-deckel.prt“ (3D printed)  
+• 1x [NVIDIA Jetson Orin 64gb](https://developer.nvidia.com/embedded/learn/jetson-agx-orin-devkit-user-guide/index.html)  
+• 1x [General Expansion Payload (GXP) module](https://support.bostondynamics.com/s/article/Spot-General-Expansion-Payload-GXP)  
+• 1x „jetson-platte.prt“ (3D printed) [(click here to download the 3D model)](models\jetson-platte.stl)  
+• 1x „jetson-deckel.prt“ (3D printed) [(click here to download the 3D model)](models\jetson-deckel.stl)  
 • 4x threaded inserts M6  
 • 4x cylinder head screw M6x80  
 • 4x cylinder head screw M5x10  
@@ -113,4 +113,4 @@ The following parts are required to copy the setup presented.
 • 6x [t-nut](https://de.misumi-ec.com/vona2/detail/110302247820/?HissuCode=HNTR5-5)  
 • [15-pin D-SUB male connector](https://www.conrad.de/de/p/tru-components-t1904c098-d-sub-stiftleisten-set-polzahl-15-schrauben-1-st-2108938.html?hk=SEM&WT.mc_id=google_pla&gad_source=1&gclid=CjwKCAjwuJ2xBhA3EiwAMVjkVI6hCHULTX5bZtmSpPjy9u6TFpEu-Qj3K-N-bZPuuvF46AN-jl-E2hoCSQwQAvD_BwE&refresh=true)  
 • [power cable](https://www.reichelt.de/adapterkabel-2000-mm-dc-stecker-auf-freies-ende-dc-aks-7521-p150125.html?PROVID=2788&gad_source=1&gclid=EAIaIQobChMIvvSshPrIhQMVigcGAB0KjAioEAQYASABEgK4bfD_BwE)  
-• Ethernet cable[name](link)
+• 1x Ethernet cable
