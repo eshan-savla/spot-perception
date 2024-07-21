@@ -119,6 +119,31 @@ The data connection is made via an Ethernet cable, which is simply connected to 
 
 When adding payloads on top of spot, the internal collision avoiding system does not automatically take this into account while path planning. For example Spot can walk under tables with nothing attached, but when the Jetson is mounted on its back, he has to crouch to not collide. Therefor these additional obstructions have to get added to the kinematic structure to make the algorithm consider them. In order to do this, the following steps are required.
 
+###### Step 1: Connect to Spots WIFI
+
+On Spots belly you can find Spots "Default Network information" (See picture below). Connect your computer to spots WIFI SSID, in our this case it is "spot-BD-31580012". You can find the WIFI password on the sticker as well.
+
 <img src="images\add payload 1.png" alt="Example Image" width="80%">
+
+###### Step 2: login to the spot configuration page
+
+On the sticker from "step 1" you can also find the login credentials for the spot configuration page.
+
+- open your browser and search for "192.168.80.3"
+- a page saying "Sign in to TurboDoggy" should open. Sign in witth the "Admin" credentials from the sticker.
+
+<img src="images\add payload 2.png" alt="Example Image" width="80%">
+
+###### Step 3:
+
+<img src="images\add payload 3.png" alt="Example Image" width="80%">
+
+###### Step 4:
+
+<img src="images\add payload 4.png" alt="Example Image" width="80%">
+
+###### Step 5:
+
+<img src="images\add payload 5.png" alt="Example Image" width="80%">
 
 %TODO: Paar Sätze über Verkablung + Konfiguration über Webinterface
