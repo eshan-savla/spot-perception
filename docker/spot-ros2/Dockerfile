@@ -30,7 +30,8 @@ ARG USER=robot
 ARG PASSWORD=robot
 ARG UID=1000
 ARG GID=1000
-ARG DOMAIN_ID=33
+# important to keep domain ID common for all containers and ROS machines used in the network
+ARG DOMAIN_ID=33 
 ARG VIDEO_GID=44
 ENV ROS_DOMAIN_ID=${DOMAIN_ID}
 ENV UID=${UID}
