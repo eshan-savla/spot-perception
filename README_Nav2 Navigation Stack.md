@@ -62,7 +62,7 @@ The following lines need to be adjusted for this:
 238	remappings=remappings + [('cmd_vel', 'hkaspot/cmd_vel')],
 259	remappings=remappings + [('cmd_vel', 'hkaspot/cmd_vel')],
 ```
-## 4. **Operation in RViz**
+## 4. **Navigation in RViz**
 
 Once the Docker is started, the Spot Mini can be controlled from an external PC using RViz. The following requirements must be met:
 
