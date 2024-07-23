@@ -89,6 +89,26 @@ ros2 launch nav2_bringup rviz_launch.py
 
 RViz should then open on the PC as shown below:
 
+![Map](images/Bild.png)
 
+The following settings should be present on the left side under Display.
 
+![Settings1](images/Bild%20(1).png)
+![Settings2](images/Bild%20(3).png)
+
+To control the Spot via RViz, ensure that the topics for `Description`, `Topic`, and `Update Topic` match the topics shown in the images.
+
+To navigate, use the `Nav2 Goal`, which can be found in the selection at the top center. To set a goal, click on the Nav2 Goal selection with the left mouse button and draw a direction arrow on the map while holding down the mouse button. This arrow indicates the desired orientation of the Spot when it arrives at the destination.
+
+It is important to select only white or light-colored areas on the map for navigation, as dark areas represent obstacles. The map shown was taken in the laboratory (ground floor) at LTC.
+
+Once a reachable goal is selected on the map, Nav2 begins planning the path to that goal point. The planned path will be drawn on the map, as shown in the following figure.
+
+![Map2](images/Bild%20(6).png)
+
+After a short time, the Spot will start moving towards the selected goal point. During navigation, the Spot's position will be continuously updated on the map. Additionally, feedback on the current state of navigation will be displayed in RViz in the following window:
+
+![Setting3](images/Bild%20(2).png)
+
+Since the Spot's localization is done via its odometry and not through Nav2, the Localization status in the RViz window is shown as `inactive`, as seen in the image.
 
