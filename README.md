@@ -150,5 +150,3 @@ This Screen is to configure the new payload:
 - add the weight of your payload
 
 <img src="images\add payload 5.png" alt="Example Image" width="80%">
-
-%TODO: Paar Sätze über Verkablung + Konfiguration über Webinterface
