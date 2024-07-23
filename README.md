@@ -6,6 +6,7 @@ This repository extends the [ROS2 Package for Spot](https://github.com/bdaiinsti
 
 The SLAM package is computationally intensive and requires sufficient processing power to function smoothly. During the develepement of this package, a [NVIDIA Jetson Orin 64gb](https://developer.nvidia.com/embedded/learn/jetson-agx-orin-devkit-user-guide/index.html) was used for edge computing locally on Spot.
 
+***
 # 1. Quick Start
 
 This assumes you have configured your hardware correctly with Spot. Refer to the [Hardware Section](#hardware-and-interfacing) for more information on configuring and interfacing your hardware directly with spot.
@@ -79,6 +80,8 @@ Your screen should look something like this:
 
 %TODO: Add screenshot with arrow and planned trajectory
 
+
+***
 # 2. Hardware and Interfacing
 
 ##### Parts list
@@ -151,13 +154,13 @@ This Screen is to configure the new payload:
 
 <img src="images\add payload 5.png" alt="Example Image" width="80%">
 
-
+***
 # 3. Software architecture
 
-
+***
 # 4. Configuration of spot ros2 package
 
-
+***
 # 5. RTAB-Map
 RTAB-Map (Real-Time Appearance-Based Mapping) is an RGB-D Graph SLAM (Simultaneous Localization and Mapping) method for map recording that utilizes a global Bayesian loop closure detector. This detector employs a bag-of-words approach to assess the likelihood of whether a new image corresponds to a previously visited location or a new one. When a loop closure hypothesis is confirmed, a new constraint is introduced into the map's graph, and a graph optimizer works to minimize errors in the map. A memory management strategy is implemented to restrict the number of locations used for loop closure detection and graph optimization, ensuring that real-time performance is maintained even in large-scale environments.
 
@@ -398,7 +401,7 @@ As shown above, the optimized map should then be exported and saved via File -> 
 
 
 
-
+***
 # 6. nav2 Navigation Stack
 Nav2 is the successor to the ROS Navigation Stack. It enables mobile robots to navigate through complex environments and perform custom tasks with nearly any type of robot kinematics.
 Nav2 can not only move from Point A to Point B but also handle intermediate waypoints. It provides functions for perception, planning, control, localization, and visualization.
@@ -513,7 +516,9 @@ After a short time, the Spot will start moving towards the selected goal point. 
 
 Since the Spot's localization is done via its odometry and not through Nav2, the Localization status in the RViz window is shown as `inactive`, as seen in the image.
 
+
+***
 # 7. GraphNav
 
-
+***
 # 8. Troubleshooting
