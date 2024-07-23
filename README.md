@@ -136,13 +136,18 @@ On the sticker from "step 1" you can also find the login credentials for the spo
 
 ###### Step 3:
 
-<img src="images\add payload 3.png" alt="Example Image" width="80%">
-
-###### Step 4:
+- On the menu bar on the right, select "Add payload"
+- This screen shows you all payloads added so far. Select "Add payload" again to subjoin another one.
 
 <img src="images\add payload 4.png" alt="Example Image" width="80%">
 
-###### Step 5:
+###### Step 4:
+
+This Screen is to configure the new payload:
+
+- add a name and a description
+- add the dimensions and position of the square box representing your payload
+- add the weight of your payload
 
 <img src="images\add payload 5.png" alt="Example Image" width="80%">
 
