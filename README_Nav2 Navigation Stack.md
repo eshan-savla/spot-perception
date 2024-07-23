@@ -46,3 +46,49 @@ Additionally, it is important to note that the plugin assignment in the paramete
 With the start of the RTAB-Map Docker, Nav2 is launched with the adjusted `nav2_params.yaml` through the following line in the entrypoint.
 
 `ros2 launch nav2_bringup navigation_launch.py params_file:=spot-perception/configs/nav2_params.yaml`
+
+## 3. **Remapping**
+
+To ensure that the velocity commands output by Nav2 are received by the Spot, additional topic remappings from Nav2 to the Spot's topic need to be applied. This must be done in the `navigation_launch.py` file at the following path.
+
+`spot-perception/launch/navigation_launch.py`
+
+The following lines need to be adjusted for this:
+
+```yaml
+135	remappings=remappings + [('cmd_vel', 'hkaspot/cmd_vel')],
+168	remappings=remappings + [('cmd_vel', 'hkaspot/cmd_vel')],
+202	remappings=remappings + [('cmd_vel', 'hkaspot/cmd_vel')],
+238	remappings=remappings + [('cmd_vel', 'hkaspot/cmd_vel')],
+259	remappings=remappings + [('cmd_vel', 'hkaspot/cmd_vel')],
+```
+## 4. **Operation in RViz**
+
+Once the Docker is started, the Spot Mini can be controlled from an external PC using RViz. The following requirements must be met:
+
+1. The PC and the Jetson must be on the same network. The network `ILKA-RoboLab2` can be used for this purpose.
+2. The ROS Domain ID of the PC must match that of the Jetson.
+
+To change the ROS Domain ID on the PC, execute the following command in the terminal:
+
+```bash
+export ROS_DOMAIN_ID=33
+```
+
+To check the ROS Domain ID, use the following command:
+
+```bash
+echo $ROS_DOMAIN_ID
+```
+
+Then, RViz can be started on the PC using the following command in the terminal:
+
+```bash
+ros2 launch nav2_bringup rviz_launch.py
+```
+
+RViz should then open on the PC as shown below:
+
+
+
+
