@@ -1,4 +1,4 @@
-# spot-perception
+# **Spot-Perception**
 
 This repository extends the [ROS2 Package for Spot](https://github.com/bdaiinstitute/spot_ros2) by integrating ROS based SLAM and navigation functionalities.
 
