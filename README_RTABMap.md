@@ -241,3 +241,21 @@ Here, you can right-click to choose whether to add an obstacle or delete an obst
 ![Screenshot from 2024-07-17 13-55-35](https://github.com/user-attachments/assets/d70423cb-1a0f-4efe-bf38-f58fb4fab3e2)
 
 As shown above, the optimized map should then be exported and saved via File -> Export, so that the changes take effect.
+
+
+##### Additional settings for local costmaps
+The RTAB-Map package also provides functionalities to detect obstacles by segmenting input point clouds to differentiate between the ground and obstacles. These are required to achieve full functionality within local costmaps detailed in the [section]() for Nav2.
+
+The relevant commands to start the nodes can be found in the entrypoint file under docker/rtab-map/entrypoint.sh. The following highlights relevant information about these commands:
+
+The command below converts depth images to point clouds. The topic depth/image is remapped to the appropriate topic for depth images from Spot. Camera intrinsics also need to be provided to convert depth values to point clouds
+
+```bash
+$ ros2 run rtabmap_util point_cloud_xyz --ros-args -r depth/image:=/hkaspot/depth_registered/frontleft/image -r depth/camera_info:=/hkaspot/depth_registered/frontleft/camera_info -p voxel_size:=0.05 -p decimation:=4 -p max_depth:=10.0 -p approx_sync:=false 
+```
+
+The command below is relevant for obstacle detection and requires two parameters, which are listed in the command below. They can remain unchanged, unless the robot name has been defined differently in the Spot ROS-2 Driver.
+
+```bash
+$ ros2 run rtabmap_util obstacles_detection --ros-args -p frame_id:=hkaspot/body -p map_frame_id:=map 
+```

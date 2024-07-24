@@ -112,3 +112,27 @@ After a short time, the Spot will start moving towards the selected goal point. 
 
 Since the Spot's localization is done via its odometry and not through Nav2, the Localization status in the RViz window is shown as `inactive`, as seen in the image.
 
+##### Using local costmaps
+While Spot has inbuilt collision detection and avoidance, a similar functionality can be achieved using ROS native local costmaps in Nav2. This requires some additional setup in RTAB-Map to recognise and publish obstacles. Details on that can be found in this [section](#bla)
+
+Configuring local costmaps in nav2 for Spot is made easier in this repository. If this functionality is desired, it can be easily enabled in the Nav2 config file under configs/nav2_params.yaml 
+
+The following is a short description of all relevant parameters for the local costmap:
+
+```yaml
+190 global_frame: hkaspot/odom # provide odom frame
+191 robot_base_frame: hkaspot/body # consider robot name
+193 width: 3 # width of costmap frame
+194 height: 3 # height of costmap frame
+200 cost_scaling_factor: 2.0 # scale cost severity
+201 inflation_radius: 0.70 # Inflate obstacle scale
+202 obstacle_layer:
+204  enabled: False # Set True to enable local costmap
+207    topic: /obstacles # topic containing obstacles
+212    raytrace_max_range: 10.0 # max distance
+214    obstacle_max_range: 5.0 # obstacle render distance
+```
+
+![local_costmap](images/local_costmap.png)
+
+Further details on these and other parameters relevant for costmaps can be obtained [here](https://docs.nav2.org/configuration/packages/configuring-costmaps.html)

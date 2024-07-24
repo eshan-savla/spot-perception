@@ -1,18 +1,20 @@
 # Built docker image available publically for arm64 under eshansavla0512/ros2-spot-arm64
-FROM introlab3it/rtabmap_ros:humble-latest
-
 ##############################################################################
 ##                                 Base Image                               ##
 ##############################################################################
-ARG ROS_DISTRO=humble
-ARG ROS_PKG=desktop-full-jammy
-ENV TZ=Europe/Berlin
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+FROM introlab3it/rtabmap_ros:humble-latest
 
 ##############################################################################
 ##                                 Global Dependecies                       ##
 ##############################################################################
 #POSIX standards-compliant default locale. Only strict ASCII characters are valid, extended to allow the basic use of UTF-8
+
+ARG ROS_DISTRO=humble
+ARG ROS_PKG=desktop-full-jammy
+ENV TZ=Europe/Berlin
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+# Setting timezone related stuff. Change for your timezone
+
 ENV LANG C.UTF-8 
 ENV LC_ALL C.UTF-8
 ENV LC_ALL=C
@@ -32,6 +34,7 @@ ARG PASSWORD=robot
 ARG UID=1000
 ARG GID=1000
 ARG DOMAIN_ID=33
+# important to keep domain ID common for all containers and ROS machines used in the network
 ARG VIDEO_GID=44
 ENV ROS_DOMAIN_ID=${DOMAIN_ID}
 ENV UID=${UID}

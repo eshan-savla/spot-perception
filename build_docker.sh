@@ -6,7 +6,7 @@ if [[ "$1" == "--cross-compile" ]]; then
     docker run --rm --privileged multiarch/qemu-user-static --reset -p yes -c yes  
 fi
 # Build the Docker containers
- docker compose build -m 10g rtabmap_ros2_container
+ docker compose build -m 10g
 
 # Build the slam docker container
 #cd ./docker/rtab-map

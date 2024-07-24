@@ -156,10 +156,127 @@ This Screen is to configure the new payload:
 
 ***
 # 3. Software architecture
+## Software-Architecture 
+This section details the software architecture for the spot-navigation package. The following image depicts the overarching interfacing between the individual software components: 
+To add an image in a markdown file, you can use the following syntax:
+
+![Software Architecture](images/spot_architektur.drawio.svg)
+
+### Spot ROS-2
+To achieve motion control of Spot mini via ROS the [ROS-2 driver](https://github.com/bdaiinstitute/spot_ros2) can be utilized. Within this package, all the necessary services, topics and actions to teleoperate or navigate with Spot Mini can be found. It also offers functionalities to interface with the different payloads offered for Spot Mini. It is important to note however, that SpotCAM has certain known issues which makes using it within the Spot ROS-2 Driver difficult. More information on how to set up this package can be found under the dedicated [Spot ROS-2 Section](#ros-2-driver-spot)
+
+Despite being still under development, this package also offers access to Spot's internal mapping and navigation tool GraphNav. This allows for ROS independent mapping and multi-storey navigation. To incorporate this functionality into ROS, a [fork](https://github.com/Banane01/spot_ros2) of the original Spot ROS-2 driver was created
+
+
+### RTAB-Map
+The [RTAB-Map ROS-2 Package](https://github.com/introlab/rtabmap_ros/tree/ros2) provides SLAM functionalities in 3D to be used in cohort with a robot navigation stack. In addition to creating a 2D planar costmap of a location, it registers its surroundings in 3D, creating a point cloud of the environment and adjusting it along with the global costmap. This package is utilized to provide fully ROS native SLAM functionality.
+
+In addition to creating the global costmap, the RTAB-Map package also offers the functionality to visually detect obstacles in the form of point clouds, which can be utilized to create a local costmap around Spot. 
+
+### Nav-2 Navigation Stack
+The [Nav-2](https://docs.nav2.org/) provides ROS native planar navigation and path planning functionalities for mobile robots. This package can be used in tandem with Rviz to provide an easy and intuitive way to navigate Spot Mini within a mapped environment. 
+
+
+
+## Docker
+Each of the packages listed above have been packaged in docker containers to manage dependencies and provide ease of use, ensuring system specific setups and configurations do not interfere with the functions of the packages. For now, the docker containers are only provided for the arm64-v8 processor architecture, as an NVIDIA Jetson Orin Developer Kit was utilized for local edge computing. By connecting user devices to the same network as the Jetson and using the same ROS-Domain ID, it is possible to interface with these packages and access their functionalities remotely. 
+
+### Spot Driver Docker
+The docker image for the spot driver is based off a ROS image for arm64-v8 and installs all the necessary ROS dependencies before moving on to clone and install the forked version of the spot ROS-2 Driver as mentioned in this [section](#spot-ros-2). 
+
+### RTAB-Map + Nav2 Docker
+This docker image packages both the ROS wrapper for RTAB-Map and the Nav2 package in one. As this is based off of the official docker image for RTAB-Map, it can be installed for an amd64 or arm64 architecture by using cross compilation provided within docker's build functionality. 
+
+### Building and starting the containers
+For ease of use, both images have been packaged within a docker-compose file, ensuring they can be built with the correct prerequisites and also started with the right flags to ensure full functionality. 
+
+Building:
+Execute the following command from within the root of the repository.
+```bash
+bash build_docker.sh # If building natively on arm64
+```
+
+```bash
+bash build_docker.sh --cross-compile # Cross compiling for arm64 on other host architectures
+```
+For details on the structure, refer to the Dockerfiles.
 
 ***
 # 4. Configuration of spot ros2 package
+## ROS-2 Driver Spot
+This section details all the necessary configuration steps for setting up the ROS-2 Driver for Spot Mini to work correctly and interface with other ROS packages. 
 
+### Installing the driver:
+Alternatively to running the driver on an edge computer locally on Spot Mini, the driver can be installed on seperate host device and run, as long as the device is physically connected to Spot via the Ethernet port or Spot's direct wifi connection. Details on the exact installation process and installation from source can be found on the GitHub page for the driver.
+
+In a gist, the driver can be installed as follows, assuming ROS-2 is already installed on the machine.
+
+```bash
+$ git clone https://github.com/bdaiinstitute/spot_ros2.git
+
+cd spot_ros2
+git submodule init
+git submodule update
+```
+To install all dependencies for this driver, the bundled script can be used. Depending on which processor architecture is being used (amd64 or arm64), the appropriate flag needs to be provided as follows:
+
+```bash
+cd <path to spot_ros2>
+./install_spot_ros2.sh
+or
+./install_spot_ros2.sh --arm64
+```
+
+Next, the ROS-2 workspace needs to be built:
+```bash
+cd <ros2 ws>
+source /opt/ros/humble/setup.bash
+colcon build --symlink-install --packages-ignore proto2ros_tests
+source install/local_setup.bash
+```
+
+#### Starting the driver after installation:
+The general command used to start the driver can be used as follows:
+```bash
+ros2 launch spot_driver spot_driver.launch.py [config_file:=<path/to/config.yaml>] [spot_name:=<Robot Name>] [publish_point_clouds:=<True|False>] [launch_rviz:=<True|False>] [uncompress_images:=<True|False>] [publish_compressed_images:=<True|False>]
+```
+
+Details on configuring the driver can be found in the next [section](#configuring-the-driver)
+
+### Configuring the driver:
+To configure the Spot ROS-2 Driver with the correct parameters a YAML file is utilized. Highlighted below are certain crucial parameters which need to be set to ensure correct functioning of the driver:
+
+```yaml
+username: # Required to access Spot-SDK
+password: 
+hostname: #IP of payload port or spot wifi
+```
+
+The username and password are provided with Spot and need to be input into the yaml file
+
+The hostname is necessary to allow communication with Spot`s internal computer and is also the channel through which outputs such as point clouds and images will be streamed.
+
+```yaml
+preferred_odom_frame: hkaspot/odom # example. If spot-name provided, it needs to be included like this
+```
+
+The preferred odometery frame has to be provided, which will also be used in the mapping and navigation section. For additional information on the choice of odometery available for spot, refer to: https://dev.bostondynamics.com/docs/concepts/geometry_and_frames.html?highlight=frame#frames-in-the-spot-robot-world
+
+Details on additional parameters can be found under the official documentation for the driver under the respective GitHub page.
+
+The driver is started directly within the docker container when it is booted. For more information on the exact start command, refer to the respective entrypoint file under docker/spot-ros2. 
+
+
+#### Visualizing the ouputs of Spot's depth cameras
+It is possible to visualize the outputs of Spot's depth cameras using Rviz. Start Rviz on the Jetson or on the local machine with a ROS-2 Installation connected to the same network and having the same domain id.
+
+```bash
+export $ROS_DOMAIN_ID=33
+echo $ROS_DOMAIN_ID # Ensure Domain ID is set
+rviz2 # Start Rviz
+```
+
+Once started, select the config file `spot.rviz`under configs using file>open. This should load all the necessary topics to visualize the outputs from the depth camera.
 ***
 # 5. RTAB-Map
 RTAB-Map (Real-Time Appearance-Based Mapping) is an RGB-D Graph SLAM (Simultaneous Localization and Mapping) method for map recording that utilizes a global Bayesian loop closure detector. This detector employs a bag-of-words approach to assess the likelihood of whether a new image corresponds to a previously visited location or a new one. When a loop closure hypothesis is confirmed, a new constraint is introduced into the map's graph, and a graph optimizer works to minimize errors in the map. A memory management strategy is implemented to restrict the number of locations used for loop closure detection and graph optimization, ensuring that real-time performance is maintained even in large-scale environments.
@@ -400,6 +517,22 @@ Here, you can right-click to choose whether to add an obstacle or delete an obst
 As shown above, the optimized map should then be exported and saved via File -> Export, so that the changes take effect.
 
 
+### Additional settings for local costmaps
+The RTAB-Map package also provides functionalities to detect obstacles by segmenting input point clouds to differentiate between the ground and obstacles. These are required to achieve full functionality within local costmaps detailed in the [section]() for Nav2.
+
+The relevant commands to start the nodes can be found in the entrypoint file under docker/rtab-map/entrypoint.sh. The following highlights relevant information about these commands:
+
+The command below converts depth images to point clouds. The topic depth/image is remapped to the appropriate topic for depth images from Spot. Camera intrinsics also need to be provided to convert depth values to point clouds
+
+```bash
+$ ros2 run rtabmap_util point_cloud_xyz --ros-args -r depth/image:=/hkaspot/depth_registered/frontleft/image -r depth/camera_info:=/hkaspot/depth_registered/frontleft/camera_info -p voxel_size:=0.05 -p decimation:=4 -p max_depth:=10.0 -p approx_sync:=false 
+```
+
+The command below is relevant for obstacle detection and requires two parameters, which are listed in the command below. They can remain unchanged, unless the robot name has been defined differently in the Spot ROS-2 Driver.
+
+```bash
+$ ros2 run rtabmap_util obstacles_detection --ros-args -p frame_id:=hkaspot/body -p map_frame_id:=map 
+```
 
 ***
 # 6. nav2 Navigation Stack
@@ -515,6 +648,31 @@ After a short time, the Spot will start moving towards the selected goal point. 
 ![Setting3](images/Bild%20(2).png)
 
 Since the Spot's localization is done via its odometry and not through Nav2, the Localization status in the RViz window is shown as `inactive`, as seen in the image.
+
+## Using local costmaps
+While Spot has inbuilt collision detection and avoidance, a similar functionality can be achieved using ROS native local costmaps in Nav2. This requires some additional setup in RTAB-Map to recognise and publish obstacles. Details on that can be found in this [section](#bla)
+
+Configuring local costmaps in nav2 for Spot is made easier in this repository. If this functionality is desired, it can be easily enabled in the Nav2 config file under configs/nav2_params.yaml 
+
+The following is a short description of all relevant parameters for the local costmap:
+
+```yaml
+190 global_frame: hkaspot/odom # provide odom frame
+191 robot_base_frame: hkaspot/body # consider robot name
+193 width: 3 # width of costmap frame
+194 height: 3 # height of costmap frame
+200 cost_scaling_factor: 2.0 # scale cost severity
+201 inflation_radius: 0.70 # Inflate obstacle scale
+202 obstacle_layer:
+204  enabled: False # Set True to enable local costmap
+207    topic: /obstacles # topic containing obstacles
+212    raytrace_max_range: 10.0 # max distance
+214    obstacle_max_range: 5.0 # obstacle render distance
+```
+
+![local_costmap](images/local_costmap.png)
+
+Further details on these and other parameters relevant for costmaps can be obtained [here](https://docs.nav2.org/configuration/packages/configuring-costmaps.html)
 
 
 ***
