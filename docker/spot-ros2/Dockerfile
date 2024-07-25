@@ -1,17 +1,19 @@
 # Built docker image available publically for arm64 under eshansavla0512/ros2-spot-arm64
-FROM arm64v8/ros:humble-ros-base-jammy
 ##############################################################################
 ##                                 Base Image                               ##
 ##############################################################################
-ARG ROS_DISTRO=humble
-ARG ROS_PKG=desktop-full-jammy
-ENV TZ=Europe/Berlin
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+FROM arm64v8/ros:humble-ros-base-jammy
 
 ##############################################################################
 ##                                 Global Dependecies                       ##
 ##############################################################################
 #POSIX standards-compliant default locale. Only strict ASCII characters are valid, extended to allow the basic use of UTF-8
+
+ARG ROS_DISTRO=humble
+ARG ROS_PKG=desktop-full-jammy
+ENV TZ=Europe/Berlin
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+# Setting timezone related stuff. Change for your timezone
 ENV LANG C.UTF-8 
 ENV LC_ALL C.UTF-8
 ENV LC_ALL=C
@@ -46,6 +48,7 @@ RUN groupadd -g "$GID" "$USER"  && \
     usermod -aG realtime "$USER" && \
     echo "$USER:$PASSWORD" | chpasswd && \
     echo "%sudo ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/sudogrp
+# Exporting ROS relevant commands to bashrc, so they are available to the user
 RUN echo "source /opt/ros/$ROS_DISTRO/setup.bash" >> /etc/bash.bashrc
 RUN echo "export ROS_DOMAIN_ID=${DOMAIN_ID}" >> /etc/bash.bashrc
 
@@ -54,7 +57,7 @@ RUN chown $USER:$USER /home/$USER/dds_profile.xml
 ENV FASTRTPS_DEFAULT_PROFILES_FILE=/home/$USER/dds_profile.xml
 
 ##############################################################################
-##                               install dependencies and ROS2 and Nav2     ##
+##                  install dependencies and ROS2 and Nav2                  ##
 ##############################################################################
 USER root
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive && apt-get install -y --no-install-recommends ros-$ROS_DISTRO-desktop \
@@ -84,19 +87,15 @@ RUN git checkout NavigateTo_bugfix && git submodule init && git submodule update
 
 WORKDIR /home/$USER/spot_ros2_ws
 
-COPY --chown=$USER ./configs/CMakeLists.txt /home/$USER/spot_ros2_ws/src/spot_ros2/spot_driver/CMakeLists.txt
-
-COPY --chown=$USER --chmod=0444 ./launch/translate_node.py /home/$USER/spot_ros2_ws/src/spot_ros2/spot_driver/spot_driver/translate_node.py
-
 RUN . /opt/ros/$ROS_DISTRO/setup.sh && colcon build --symlink-install --packages-ignore proto2ros_tests --cmake-args -DCMAKE_BUILD_TYPE=Release
-
+# Config file for launching Spot ROS-2 Driver
 COPY --chown=$USER --chmod=0444 configs/spot_ros_config.yaml /home/$USER/spot_ros2_ws/src/spot_ros2/configs/spot_ros_config.yaml
 
 ##############################################################################
 ##                                 Build ROS and run                        ##
 ##############################################################################
 WORKDIR /home/$USER/spot_ros2_ws
-
+# Entrypoint to source and launch driver upon start
 COPY --chown=$USER --chmod=0755 docker/spot-ros2/entrypoint.sh /home/$USER/spot_ros2_ws/entrypoint.sh
 CMD [ "/bin/bash" ]
 

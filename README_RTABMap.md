@@ -226,14 +226,36 @@ rtabmap-databaseViewer /home/robot/spot-perception/map/rtabmap_copy.db
 
 The Database Viewer opens, as shown in the following illustration:
 
-![dbviewer](https://github.com/user-attachments/assets/8cb8d088-4981-49ca-9ed9-c084b6d559f0)
+![Screenshot from 2024-07-17 13-53-12](https://github.com/user-attachments/assets/b28f845d-8d45-497f-937f-48c06360a59c)
 
 This tool can be used to view and customise all the images contained in the map. Via Edit > Detect more loop closures, the entire data set is looked through again and optically identical points are found that can close the nodes in the map. 
-...
+
+### Optimization of 2D map
+Since only the 2D map will be used for navigation with the nav2 Navigation Stack in a later step, this map can also be adjusted and edited here. To do this, the map can be opened in a new window via Edit -> Optimize 2D map, as shown below.
+
+![Screenshot from 2024-07-17 13-54-36](https://github.com/user-attachments/assets/7e6a9537-12e9-4fb0-a327-7fbb5b16a85f)
+
+Here, you can right-click to choose whether to add an obstacle or delete an obstacle. Then, by pressing the left mouse button, you can modify or redraw the map. This step can be particularly helpful when dealing with low-resolution cameras. Often, the 2D map contains individual points that are stored as obstacles, even though there is actually none. These points can then be retouched using this tool, allowing the robot to pass through the corresponding area.
+
+### Save the optimized map
+![Screenshot from 2024-07-17 13-55-35](https://github.com/user-attachments/assets/d70423cb-1a0f-4efe-bf38-f58fb4fab3e2)
+
+As shown above, the optimized map should then be exported and saved via File -> Export, so that the changes take effect.
 
 
+##### Additional settings for local costmaps
+The RTAB-Map package also provides functionalities to detect obstacles by segmenting input point clouds to differentiate between the ground and obstacles. These are required to achieve full functionality within local costmaps detailed in the [section]() for Nav2.
 
+The relevant commands to start the nodes can be found in the entrypoint file under docker/rtab-map/entrypoint.sh. The following highlights relevant information about these commands:
 
+The command below converts depth images to point clouds. The topic depth/image is remapped to the appropriate topic for depth images from Spot. Camera intrinsics also need to be provided to convert depth values to point clouds
 
+```bash
+$ ros2 run rtabmap_util point_cloud_xyz --ros-args -r depth/image:=/hkaspot/depth_registered/frontleft/image -r depth/camera_info:=/hkaspot/depth_registered/frontleft/camera_info -p voxel_size:=0.05 -p decimation:=4 -p max_depth:=10.0 -p approx_sync:=false 
+```
 
+The command below is relevant for obstacle detection and requires two parameters, which are listed in the command below. They can remain unchanged, unless the robot name has been defined differently in the Spot ROS-2 Driver.
 
+```bash
+$ ros2 run rtabmap_util obstacles_detection --ros-args -p frame_id:=hkaspot/body -p map_frame_id:=map 
+```

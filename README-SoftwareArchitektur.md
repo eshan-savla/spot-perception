@@ -42,4 +42,4 @@ bash build_docker.sh # If building natively on arm64
 ```bash
 bash build_docker.sh --cross-compile # Cross compiling for arm64 on other host architectures
 ```
-
+For details on the structure, refer to the Dockerfiles.
