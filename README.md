@@ -113,11 +113,11 @@ For operating the SLAM package, the [NVIDIA Jetson Orin 64gb](https://developer.
 
 Jetson must be supplied with power and connected correctly to the spot core to ensure communication between the systems. To connect such external devices, Boston Dynamics offers the [General Expansion Payload (GXP) module](https://support.bostondynamics.com/s/article/Spot-General-Expansion-Payload-GXP). This is also screwed onto the mounting rails and connected to the front of the two DB25 sockets. A regulated power supply can then be tapped from the GXP module using an [15-pin D-SUB male connector](https://www.conrad.de/de/p/tru-components-t1904c098-d-sub-stiftleisten-set-polzahl-15-schrauben-1-st-2108938.html?hk=SEM&WT.mc_id=google_pla&gad_source=1&gclid=CjwKCAjwuJ2xBhA3EiwAMVjkVI6hCHULTX5bZtmSpPjy9u6TFpEu-Qj3K-N-bZPuuvF46AN-jl-E2hoCSQwQAvD_BwE&refresh=true). The table below shows which pins to use for connection. We chose pins 13 (+24V) and 1 (GND) for a supply voltage of 24 V (max. 150 W).
 
-<img src="images\GXP_module_pins.png" alt="Example Image" width="50%">
+<img src="images\GXP_module_pins.png" alt="Example Image" width="30%">
 
 The data connection is made via an Ethernet cable, which is simply connected to the GXP bridge. The figure beneath shows the connected and mounted Jetson on Spot.
 
-<img src="images\mounted_payload.png" alt="Example Image" width="50%">
+<img src="images\mounted_payload.png" alt="Example Image" width="30%">
 
 ##### Add payload in web interface for collision avoiding:
 
@@ -127,7 +127,7 @@ When adding payloads on top of spot, the internal collision avoiding system does
 
 On Spots belly you can find Spots "Default Network information" (See picture below). Connect your computer to spots WIFI SSID, in our this case it is "spot-BD-31580012". You can find the WIFI password on the sticker as well.
 
-<img src="images\add payload 1.png" alt="Example Image" width="80%">
+<img src="images\add payload 1.png" alt="Example Image" width="40%">
 
 ###### Step 2: login to the spot configuration page
 
@@ -136,14 +136,14 @@ On the sticker from "step 1" you can also find the login credentials for the spo
 - open your browser and search for "192.168.80.3"
 - a page saying "Sign in to TurboDoggy" should open. Sign in witth the "Admin" credentials from the sticker.
 
-<img src="images\add payload 2.png" alt="Example Image" width="80%">
+<img src="images\add payload 2.png" alt="Example Image" width="60%">
 
 ###### Step 3:
 
 - On the menu bar on the right, select "Add payload"
 - This screen shows you all payloads added so far. Select "Add payload" again to subjoin another one.
 
-<img src="images\add payload 4.png" alt="Example Image" width="80%">
+<img src="images\add payload 4.png" alt="Example Image" width="60%">
 
 ###### Step 4:
 
@@ -151,19 +151,19 @@ This Step is to configure the new payload:
 
 - add a name and a description:
 
-<img src="images\add payload 5.png" alt="Example Image" width="80%">
+<img src="images\add payload 5.png" alt="Example Image" width="60%">
 
 - add a position and orientation of the payloads reference frame. Also add the payloads weight:
 
-<img src="images\add payload 6.png" alt="Example Image" width="80%">
+<img src="images\add payload 6.png" alt="Example Image" width="60%">
 
 - define the position of the center of mass and the dimensions of the square bounding box representing the the payload:
 
-<img src="images\add payload 7.png" alt="Example Image" width="80%">
+<img src="images\add payload 7.png" alt="Example Image" width="60%">
 
 - you should find a visualization of your payload configuration on the end of the page:
 
-<img src="images\add payload 8.png" alt="Example Image" width="80%">
+<img src="images\add payload 8.png" alt="Example Image" width="40%">
 
 ---
 
