@@ -136,14 +136,14 @@ On the sticker from "step 1" you can also find the login credentials for the spo
 - open your browser and search for "192.168.80.3"
 - a page saying "Sign in to TurboDoggy" should open. Sign in witth the "Admin" credentials from the sticker.
 
-<img src="images\add payload 2.png" alt="Example Image" width="70%">
+<img src="images\add payload 2.png" alt="Example Image" width="80%">
 
 ###### Step 3:
 
 - On the menu bar on the right, select "Add payload"
 - This screen shows you all payloads added so far. Select "Add payload" again to subjoin another one.
 
-<img src="images\add payload 4.png" alt="Example Image" width="70%">
+<img src="images\add payload 4.png" alt="Example Image" width="80%">
 
 ###### Step 4:
 
@@ -151,7 +151,7 @@ This Step is to configure the new payload:
 
 - add a name and a description:
 
-<img src="images\add payload 5.png" alt="Example Image" width="70%">
+<img src="images\add payload 5.png" alt="Example Image" width="80%">
 
 - add a position and orientation of the payloads reference frame. Also add the payloads weight:
 
