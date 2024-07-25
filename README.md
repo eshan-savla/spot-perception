@@ -143,10 +143,20 @@ On the sticker from "step 1" you can also find the login credentials for the spo
 
 ###### Step 4:
 
-This Screen is to configure the new payload:
+This Step is to configure the new payload:
 
-- add a name and a description
-- add the dimensions and position of the square box representing your payload
-- add the weight of your payload
+- add a name and a description:
 
 <img src="images\add payload 5.png" alt="Example Image" width="80%">
+
+- add a position and orientation of the payloads reference frame. Also add the payloads weight:
+
+<img src="images\add payload 6.png" alt="Example Image" width="80%">
+
+- define the position of the center of mass and the dimensions of the square bounding box representing the the payload:
+
+<img src="images\add payload 7.png" alt="Example Image" width="80%">
+
+- you should find a visualization of your payload configuration on the end of the page:
+
+<img src="images\add payload 8.png" alt="Example Image" width="80%">
