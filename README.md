@@ -153,6 +153,18 @@ This Step is to configure the new payload:
 
 <img src="images\add payload 5.png" alt="Example Image" width="80%">
 
+- add a position and orientation of the payloads reference frame. Also add the payloads weight:
+
+<img src="images\add payload 6.png" alt="Example Image" width="80%">
+
+- define the position of the center of mass and the dimensions of the square bounding box representing the the payload:
+
+<img src="images\add payload 7.png" alt="Example Image" width="80%">
+
+- you should find a visualization of your payload configuration on the end of the page:
+
+<img src="images\add payload 8.png" alt="Example Image" width="80%">
+
 ---
 
 # 3. Software architecture
