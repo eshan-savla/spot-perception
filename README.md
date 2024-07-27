@@ -718,3 +718,36 @@ Further details on these and other parameters relevant for costmaps can be obtai
 ---
 
 # 8. Troubleshooting
+
+## Connection to robot fails when starting spot-ros2-driver
+
+If the spot-ros2-driver is unable to start because of a failed connection to ther robot check the following steps:
+
+1. Check the hardware connections, especially the ethernet cable connection
+2. Check the system time and date of the Jetson. If the mismatch between the system time and the actual time, the driver is unable to connect.
+3. If system time is out of date update it in the settings
+
+## Localization or mapping problems
+
+If you encounter any problems while recording a new map via RTAB-Map or you encounter localization problems, have a look on the RTAB-viewer. If the viewer flashes dark red repeatedly, the robot's odometry is lost. Therefore check before you record a map whether the odometry is received correctly and if not try to restart the container.
+
+## ROS network problems
+
+If you try to access to ROS2 nodes from another computer but can't see any ROS2 nodes or topics check the following steps:
+
+1. Check whether the `ROS_DOMAIN_ID` of your current terminal equals to `33`
+ ```shell
+echo $ROS_DOMAIN_ID 
+```
+If it doesn't run:
+ ```shell
+export $ROS_DOMAIN_ID=33
+```
+2. Check the status of the firewall on Jetson's ubuntu
+ ```shell
+sudo ufw status
+```
+If status is active disable it by:
+ ```shell
+sudo ufw disable
+```
