@@ -805,16 +805,16 @@ GraphNav is part of the SpotSDK, therefore the SpotSDK has to be installed to be
 
 2. Clone the SDKRepo for access to the examples
 ```shell
-$ git clone https://github.com/boston-dynamics/spot-sdk.git
-$ cd spot-sdk
+git clone https://github.com/boston-dynamics/spot-sdk.git
+cd spot-sdk
 ```
 3. Navigate to recording_command_line example
 ```shell
-$ cd python/examples/graph_nav_command_line
+cd python/examples/graph_nav_command_line
 ```
 4. Install missing dependencies for the map-recoding-tool via pip
 ```shell
-$ python3 -m pip install -r requirements.txt
+python3 -m pip install -r requirements.txt
 ```
 
 ## Map Recording
@@ -828,7 +828,7 @@ $ python3 -m pip install -r requirements.txt
 
 3. Start the map-recording-tool  (ROBOT_IP: 192.168.80.3)
 ```shell
-$ python3 -m recording_command_line --download-filepath <path_to_downloaded_map> ROBOT_IP
+python3 -m recording_command_line --download-filepath <path_to_downloaded_map> ROBOT_IP
 ```
 4. Start recording a map by pressing (1) in the command-line-tool
 
@@ -865,7 +865,7 @@ To view the recorded map follow the following steps:
 
 1. Navigate to view_map example in the spot-sdk
 ```shell
-$ cd python/examples/graph_nav_view_map
+cd python/examples/graph_nav_view_map
 ```
 
 2. Start the map-viewer-tool
@@ -888,15 +888,15 @@ For navigation with GraphNav we provide an example program that allows the robot
 Before you are able to run the example make sure that the recorded graph is loaded and if not, clear the current graph and upload the new graph like this or call it via rqt:
 
  ```shell
-$ ros2 service call /hkaspot/graph_nav_clear_graph spot_msgs/srv/GraphNavClearGraph
+ros2 service call /hkaspot/graph_nav_clear_graph spot_msgs/srv/GraphNavClearGraph
 ```
  ```shell
-$ ros2 service call /hkaspot/graph_nav_upload_graph spot_msgs/srv/UploadGraph "{upload_filepath: '<path_to_downloaded_map>'}"
+ros2 service call /hkaspot/graph_nav_upload_graph spot_msgs/srv/UploadGraph "{upload_filepath: '<path_to_downloaded_map>'}"
 ```
 
 By the next service call, you can list all available waypoints in the current graph. Notice that if you leave the parameter empty you will get a list of waypoints from the actual loaded graph.
  ```shell
-$ ros2 service call /hkaspot/list_graph spot_msgs/srv/ListGraph "{upload_filepath: '<path_to_downloaded_map>'}"
+ros2 service call /hkaspot/list_graph spot_msgs/srv/ListGraph "{upload_filepath: '<path_to_downloaded_map>'}"
 ```
 By running this service you will notice that the response is a list of strings with waypoint-ids like: *hammy-skink-iKQI6hGQ.fCBWXJy6mmjqg==*. These are the waypoints the robot is able to navigate to. Because this waypoints are a bit confusiong and don't fit to the waypoint-ids shown in the graph-viewer our approach was it to translate these waypoint-ids to match the numbers in the map-viewer.
 
