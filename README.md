@@ -73,13 +73,11 @@ ros2 launch nav2_bringup rviz.launch.py
 
 Your screen should look something like this:
 
-%TODO: Add screenshot of rviz with map
+![nav2-map](images/Bild.png)
 
-**Hint -** You can blend spots model in rviz by selecting the right topic under RobotModel>%TODO finish rest
+**Hint -** You can visualize Spot's model in rviz by selecting the right topic under RobotModel>Description Topic. Details on this can be found in this [section](#navigation-in-rviz)
 
 8. Using the _Nav2 Goal_ option you can click on your goal point and drag your mouse while holding down the left button to provide your goal orientation for spot.
-
-%TODO: Add screenshot with arrow and planned trajectory
 
 ---
 
@@ -552,7 +550,7 @@ As shown above, the optimized map should then be exported and saved via File -> 
 
 ### Additional settings for local costmaps
 
-The RTAB-Map package also provides functionalities to detect obstacles by segmenting input point clouds to differentiate between the ground and obstacles. These are required to achieve full functionality within local costmaps detailed in the [section]() for Nav2.
+The RTAB-Map package also provides functionalities to detect obstacles by segmenting input point clouds to differentiate between the ground and obstacles. These are required to achieve full functionality within local costmaps detailed in the [section](#using-local-costmaps) for Nav2.
 
 The relevant commands to start the nodes can be found in the entrypoint file under docker/rtab-map/entrypoint.sh. The following highlights relevant information about these commands:
 
@@ -687,7 +685,7 @@ Since the Spot's localization is done via its odometry and not through Nav2, the
 
 ## Using local costmaps
 
-While Spot has inbuilt collision detection and avoidance, a similar functionality can be achieved using ROS native local costmaps in Nav2. This requires some additional setup in RTAB-Map to recognise and publish obstacles. Details on that can be found in this [section](#bla)
+While Spot has inbuilt collision detection and avoidance, a similar functionality can be achieved using ROS native local costmaps in Nav2. This requires some additional setup in RTAB-Map to recognise and publish obstacles. Details on that can be found in this [section](#additional-settings-for-local-costmaps)
 
 Configuring local costmaps in nav2 for Spot is made easier in this repository. If this functionality is desired, it can be easily enabled in the Nav2 config file under configs/nav2_params.yaml
 
