@@ -84,7 +84,25 @@ Practically the driver was not well tested for navigation vith graph-nav and the
 Therfore we created a new repo which handles some of the bugs and enables the opportunity to navigate to waypoints using GraphNav.
 
 Be now provide the important changes to the driver to enable the navigation.
-    
+
+### Navigation
+
+For navigation with GraphNav we provided an example program that allows the robot to automatically wake up and stand up and navigate to defined waypoint. You can find the example **spot_navigation_client.py** in the spot_examples directory of our modified spot-ros2-driver package.
+
+Before you are able to run the example make sure that the recorded graph is loaded and if not clear the current graph and upload the new graph like this or call the via rqt:
+
+ ```shell
+$ ros2 service call /hkaspot/graph_nav_clear_graph spot_msgs/srv/GraphNavClearGraph
+$ ros2 service call /graph_nav_upload_graph spot_msgs/srv/UploadGraph "{upload_filepath: '<path_to_downloaded_map>'}"
+```
+
+--robot", type=str, default=None)
+--navigate_to", type=int, default=0)
+--initialize_position", type=bool, default=False)
+--upload_path", type=str, default="/home/robot/spot_map/downloaded_graph")
+--initial_localization_fiducial", type=bool, default=True)
+--initial_localization_waypoint", type=str, default="")
+
 
 
 
